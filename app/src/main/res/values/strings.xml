@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">UWI TIME MANAGEMEENT</string>
+
+    <string name="login_preference">com.example.kyle.uwitimemanagemeent_login_preference</string>
+    <string name="login_preference_status">com.example.kyle.uwitimemanagemeent_login_preference_status</string>
+
+</resources>
