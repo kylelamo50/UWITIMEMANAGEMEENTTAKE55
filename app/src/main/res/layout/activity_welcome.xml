@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/backimg3"
 
-    tools:context=".EngineActivity"
+    tools:context=".WelcomeActivity"
     tools:layout_editor_absoluteY="25dp">
 
     <Button

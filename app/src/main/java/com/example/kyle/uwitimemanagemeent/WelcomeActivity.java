@@ -8,26 +8,27 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 
-public class EngineActivity extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
 
     // private  View v;
-    private Button back;
+    private Button back,calendar;
     private TextView tv;
     private UserSessionActivity session;
     private ImageView image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_engine);
+        setContentView(R.layout.activity_welcome);
         image=(ImageView)findViewById(R.id.imageView);
         back=(Button)findViewById(R.id.button3);
         back.setOnClickListener(new  Button_Clicker());
+
+        calendar=(Button)findViewById(R.id.button2);
+        calendar.setOnClickListener(new  Button_Clicker());
         // v=getWindow().getDecorView();
         String b="";
         try{
@@ -94,6 +95,11 @@ public class EngineActivity extends AppCompatActivity {
                 startActivity(i);
                 finish();
 
+            }
+
+            if(v==calendar){
+                Intent i2 = new Intent(getApplicationContext(), DefaultMonthlyCalendarActivity.class);
+                startActivity(i2);
             }
         }
     }

@@ -35,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         if (session.readLoginStatus()) {
-            Intent intent = new Intent(getApplicationContext(), EngineActivity.class);
+            Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
 
 
             startActivity(intent);
@@ -107,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                             }
 
-                                Intent intent = new Intent(getApplicationContext(), EngineActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
 
                                 startActivity(intent);
                                 session.writeLoginStatus(true);
