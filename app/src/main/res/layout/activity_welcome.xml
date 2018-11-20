@@ -13,9 +13,9 @@
     <Button
         android:id="@+id/button2"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginBottom="57dp"
-        android:layout_marginEnd="17dp"
+        android:layout_marginEnd="15dp"
         android:text="EXPLORE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,33 +26,33 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="290dp"
+        android:layout_marginBottom="299dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="103dp"
         android:text="Welcome"
         android:textAlignment="center"
         android:textColor="#FFF"
         android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="165dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="340dp"
+        android:layout_marginBottom="348dp"
         android:layout_marginTop="34dp"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-       />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="56dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="63dp"
         android:layout_marginEnd="114dp"
         android:layout_marginStart="20dp"
         android:text="Change Info"
