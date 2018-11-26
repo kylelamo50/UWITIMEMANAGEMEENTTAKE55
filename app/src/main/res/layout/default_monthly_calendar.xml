@@ -6,20 +6,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".DefaultMonthlyCalendarActivity">
+    tools:context=".DefaultMonthlyCalendarActivity"
+    tools:layout_editor_absoluteY="25dp">
 
     <Button
         android:id="@+id/button4"
         android:layout_width="108dp"
-        android:layout_height="67dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/button"
+        android:onClick="showPopUp"
         android:text="Tip"
-        android:textSize="30dp"
         android:textColor="@color/white"
+        android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:onClick="showPopUp"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/bg_calen"
+        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_task_button">
+
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="321dp"
+            android:layout_height="361dp"
+            tools:layout_editor_absoluteX="38dp"
+            tools:layout_editor_absoluteY="99dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/add_task_button"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="36dp"
+        android:text="addTask"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
