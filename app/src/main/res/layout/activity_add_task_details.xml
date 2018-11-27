@@ -8,7 +8,7 @@
     tools:layout_editor_absoluteY="25dp">
 
     <TextView
-        android:id="@+id/task_title"
+        android:id="@+id/school_title"
         android:layout_width="110dp"
         android:layout_height="0dp"
         android:layout_marginBottom="265dp"
@@ -31,9 +31,10 @@
         android:layout_marginTop="56dp"
         android:ems="10"
         android:inputType="date"
+        android:text="Start Date"
         app:layout_constraintEnd_toStartOf="@+id/task_endDate"
         app:layout_constraintStart_toEndOf="@+id/Dstart"
-        app:layout_constraintTop_toBottomOf="@+id/task_title"
+        app:layout_constraintTop_toBottomOf="@+id/school_title"
         tools:text="Start Date" />
 
     <EditText
@@ -45,6 +46,7 @@
         android:layout_marginTop="1dp"
         android:ems="10"
         android:inputType="date"
+        android:text="End Date"
         app:layout_constraintBottom_toBottomOf="@+id/task_startDate"
         app:layout_constraintEnd_toStartOf="@+id/Dend"
         app:layout_constraintStart_toEndOf="@+id/task_startDate"
@@ -159,6 +161,6 @@
         android:text="Add Note"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/task_endTime"
-        app:layout_constraintTop_toBottomOf="@+id/task_title" />
+        app:layout_constraintTop_toBottomOf="@+id/school_title" />
 
 </android.support.constraint.ConstraintLayout>

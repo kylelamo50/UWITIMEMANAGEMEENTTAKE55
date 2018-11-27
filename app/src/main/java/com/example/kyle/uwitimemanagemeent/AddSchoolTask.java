@@ -24,15 +24,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddTaskDetails extends AppCompatActivity implements View.OnClickListener{
-    DatabaseHelper myDb;
+public class AddSchoolTask extends AppCompatActivity implements View.OnClickListener{
+    SchoolDataBaseHelper myDb;
     TextView title;
-    EditText startDate,endDate,startTime,endTime,note;
+    EditText startDate,endDate,startTime,endTime,note,loc,classes;
     Button btnAddData,btnviewAll,btnDelete,btnviewUpdate;
     Button start_T,start_D,end_T,end_D;
     private int mYear, mMonth, mDay, mHour, mMinute;
     private long sDate,sTime,eDate,eTime;
     String s = "";
+    String l=" ";
+    String c=" ";
     String n = "";
     CompactCalendarView compactCalendar;
     private static int titleCount = 0;
@@ -41,7 +43,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_task_details);
+        setContentView(R.layout.activity_add_school_task);
         final ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
@@ -50,6 +52,8 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
         endDate = (EditText)findViewById(R.id.task_endDate);
         startTime = (EditText)findViewById(R.id.task_startTime);
         endTime = (EditText)findViewById(R.id.task_endTime);
+        loc=(EditText)findViewById(R.id.locationEditText) ;
+        classes=(EditText)findViewById(R.id.classEditText);
         start_T= findViewById(R.id.Tstart);
         start_D= findViewById(R.id.Dstart);
         end_T= findViewById(R.id.Tend);
@@ -57,13 +61,6 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
         note = findViewById(R.id.task_note);
         btnAddData = (Button)findViewById(R.id.task_save);
         btnviewAll = (Button)findViewById(R.id.all);
-
-//        btnviewUpdate= (Button)findViewById(R.id.button_update);
-//        btnDelete= (Button)findViewById(R.id.button_delete);
-
-//        viewAll();
-//        UpdateData();
-//        DeleteData();
 
         start_T.setOnClickListener(this);
         start_D.setOnClickListener(this);
@@ -74,8 +71,10 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myDb = new DatabaseHelper(getApplicationContext());
+                        myDb = new SchoolDataBaseHelper(getApplicationContext());
                         s = title.getText().toString();
+                        l=loc.getText().toString();
+                        c=classes.getText().toString();
 
                         if(note.getText().toString().trim().length() == 0){
                             note.setText("No notes added.");
@@ -85,13 +84,13 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                             n=note.getText().toString();
                         }
 
-                        boolean isInserted =myDb.insertData(s, sDate, eDate, sTime, eTime,n);
+                        boolean isInserted =myDb.insertData(s, sDate, eDate, sTime, eTime,l,c,n);
 
 
                         if(isInserted == true)
-                           Toast.makeText(getApplicationContext(),"Data Inserted",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"Data Inserted",Toast.LENGTH_LONG).show();
                         else
-                           Toast.makeText(getApplicationContext(),"Data not Inserted",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"Data not Inserted",Toast.LENGTH_LONG).show();
 
 
                         Intent i=new Intent(getApplicationContext(), DefaultMonthlyCalendarActivity.class);
@@ -122,7 +121,9 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                             buffer.append("EndDate :"+ res.getLong(3)+"\n");
                             buffer.append("StarTtime: "+ getTime(res.getLong(4))+"\n");
                             buffer.append("EndTime: "+ getTime(res.getLong(5))+"\n");
-                            buffer.append("Note: "+ res.getString(6)+"\n\n");
+                            buffer.append("Location :"+ res.getString(6)+"\n");
+                            buffer.append("Class :"+ res.getString(7)+"\n");
+                            buffer.append("Note: "+ res.getString(8)+"\n\n");
                         }
 
                         // Show all data
@@ -131,9 +132,6 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
 //
 
     }
-
-
-
     @Override
     public void onClick(View v) {
 
@@ -297,70 +295,3 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
 //    public void DeleteData() {
 //        btnDelete.setOnClickListener(
 }
-
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Integer deletedRows = myDb.deleteData(editTextId.getText().toString());
-//                        if(deletedRows > 0)
-//                            Toast.makeText(MainActivity.this,"Data Deleted",Toast.LENGTH_LONG).show();
-//                        else
-//                            Toast.makeText(MainActivity.this,"Data not Deleted",Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//        );
-//    }
-//    public void UpdateData() {
-//        btnviewUpdate.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        boolean isUpdate = myDb.updateData(editTextId.getText().toString(),
-//                                editName.getText().toString(),
-//                                editSurname.getText().toString(),editMarks.getText().toString());
-//                        if(isUpdate == true)
-//                            Toast.makeText(MainActivity.this,"Data Update",Toast.LENGTH_LONG).show();
-//                        else
-//                            Toast.makeText(MainActivity.this,"Data not Updated",Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//        );
-//    }
-//
-//    public void viewAll() {
-//        btnviewAll.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Cursor res = myDb.getAllData();
-//                        if(res.getCount() == 0) {
-//                            // show message
-//                            showMessage("Error","Nothing found");
-//                            return;
-//                        }
-//
-//                        StringBuffer buffer = new StringBuffer();
-//                        while (res.moveToNext()) {
-//                            buffer.append("Id :"+ res.getString(0)+"\n");
-//                            buffer.append("Name :"+ res.getString(1)+"\n");
-//                            buffer.append("Surname :"+ res.getString(2)+"\n");
-//                            buffer.append("Marks :"+ res.getString(3)+"\n\n");
-//                        }
-//
-//                        // Show all data
-//                        showMessage("Data",buffer.toString());
-//                    }
-//                }
-//        );
-//    }
-//
-//    public void showMessage(String title,String Message){
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setCancelable(true);
-//        builder.setTitle(title);
-//        builder.setMessage(Message);
-//        builder.show();
-//    }
-//
-//
-//}

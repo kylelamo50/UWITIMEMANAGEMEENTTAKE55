@@ -3,6 +3,7 @@ package com.example.kyle.uwitimemanagemeent;
 
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,8 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         reg = (Button) findViewById(R.id.button);
         rg = (RadioGroup) findViewById(R.id.radioGroup);
         userName = (EditText) findViewById(R.id.editText);

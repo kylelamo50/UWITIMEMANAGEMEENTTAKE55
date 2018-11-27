@@ -8,44 +8,48 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-public class DatabaseHelper extends SQLiteOpenHelper{
-    public static final String DATABASE_NAME = "Database1.db";
-    public static final String TABLE_NAME = "task";
+public class SchoolDataBaseHelper extends SQLiteOpenHelper{
+    public static final String DATABASE_NAME = "Database2.db";
+    public static final String TABLE_NAME = "schoolTask";
     public static final String COL_1 = "ID";
     public static final String COL_2 = "TITLE";
     public static final String COL_3 = "STARTDATE";
     public static final String COL_4 = "ENDDATE";
     public static final String COL_5 = "STARTTIME";
     public static final String COL_6 = "ENDTIME";
-    public static final String COL_7 = "NOTE";
+    public static final String COL_7 = "LOCATION";
+    public static final String COL_8 = "CLASS";
+    public static final String COL_9 = "NOTE";
 //        public static final String COL_7 = "";
 
 
-    public DatabaseHelper(Context context) {
+    public SchoolDataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_NAME +
-                " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                " (ID INTEGER PRIMARY KEY AUTOINCREMENT , " +
                 "TITLE TEXT, " +
                 "STARTDATE INTEGER," +
                 "ENDDATE INTEGER," +
                 "STARTTIME INTEGER," +
                 "ENDTIME INTEGER," +
+                "LOCATION TEXT,"+
+                "CLASS TEXT,"+
                 "NOTE TEXT" +
                 ")");
 
     }
 
-   @Override
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
         onCreate(db);
     }
 
-    public boolean insertData(String title,long startdate,long enddate,long starttime, long endtime,String note) {
+    public boolean insertData(String title,long startdate,long enddate,long starttime, long endtime,String location,String Class,String note) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2,title);
@@ -53,7 +57,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(COL_4,enddate);
         contentValues.put(COL_5,starttime);
         contentValues.put(COL_6,endtime);
-        contentValues.put(COL_7,note);
+        contentValues.put(COL_7,location);
+        contentValues.put(COL_8,Class);
+        contentValues.put(COL_9,note);
 
         long result = db.insert(TABLE_NAME,null ,contentValues);
         if(result == -1)
@@ -69,23 +75,23 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
 
-/*
-    public Cursor getAllDataId(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String table = "TABLE_NAME";
-        String[] columns = {"*"};
-        String selection = "COL_1 =?";
-        String[] selectionArgs = {"id"};
-        String groupBy = null;
-        String having = null;
-        String orderBy = null;
-        String limit = null;
+    /*
+        public Cursor getAllDataId(int id) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            String table = "TABLE_NAME";
+            String[] columns = {"*"};
+            String selection = "COL_1 =?";
+            String[] selectionArgs = {"id"};
+            String groupBy = null;
+            String having = null;
+            String orderBy = null;
+            String limit = null;
 
-        Cursor cursor = db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
-        return cursor;
-    }
-*/
-    public boolean updateData(int id,String title,long startdate,long enddate,long starttime, long endtime,String note) {
+            Cursor cursor = db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
+            return cursor;
+        }
+    */
+    public boolean updateData(int id,String title,long startdate,long enddate,long starttime, long endtime,String location,String Class,String note) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1,id);
@@ -94,7 +100,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(COL_4,enddate);
         contentValues.put(COL_5,starttime);
         contentValues.put(COL_6,endtime);
-        contentValues.put(COL_7,note);
+        contentValues.put(COL_7,location);
+        contentValues.put(COL_8,Class);
+        contentValues.put(COL_9,note);
 
         db.update(TABLE_NAME, contentValues, "ID = ?",new String[] {String.valueOf(id)});
         return true;

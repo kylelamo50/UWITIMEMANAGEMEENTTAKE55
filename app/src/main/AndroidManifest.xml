@@ -20,7 +20,9 @@
         <activity android:name=".DefaultMonthlyCalendarActivity" />
         <activity android:name=".AddTask" />
         <activity android:name=".AddTaskDetails" />
-        <activity android:name=".DatabaseHelper"></activity>
+        <activity android:name=".DatabaseHelper" />
+        <activity android:name=".AddSchoolTask" />
+        <activity android:name=".SchoolDataBaseHelper"></activity>
     </application>
 
 </manifest>

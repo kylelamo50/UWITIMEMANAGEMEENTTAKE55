@@ -12,7 +12,7 @@
     tools:layout_editor_absoluteY="109dp">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewDailyTask"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="center"
@@ -24,13 +24,13 @@
         android:textColor="@color/white"
         android:textSize="30dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintEnd_toStartOf="@+id/textView3"
+        app:layout_constraintBottom_toTopOf="@+id/data"
+        app:layout_constraintEnd_toStartOf="@+id/close"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/close"
         android:layout_width="57dp"
         android:layout_height="0dp"
         android:layout_gravity="end"
@@ -44,7 +44,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/textViewDailyTask"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -56,11 +56,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/close"
         app:srcCompat="@drawable/uwi" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/data"
         android:layout_width="312dp"
         android:layout_height="98dp"
         android:layout_marginBottom="21dp"
@@ -68,6 +68,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewDailyTask" />
 
 </android.support.constraint.ConstraintLayout>
