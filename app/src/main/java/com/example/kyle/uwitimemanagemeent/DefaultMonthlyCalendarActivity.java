@@ -9,23 +9,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-
 import android.content.Intent;
 import android.widget.Toast;
-
 import java.text.DateFormat;
 import java.text.ParseException;
-
 import java.util.Calendar;
-
-
 import java.util.ArrayList;
 import java.util.Random;
-
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import java.text.SimpleDateFormat;
@@ -48,6 +40,8 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity {
 
     ArrayList<Event> ev1;
     ArrayList<Event> ev2;
+    ArrayList<Event> compareStartDate1;
+    ArrayList<Event> compareStartDate2;
     private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM- yyyy", Locale.getDefault());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +57,8 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity {
         myDb.getAllData();
         myDb2 = new SchoolDataBaseHelper(getApplicationContext());
         myDb2.getAllData();
-        //myDb.deleteData("1");
-
+       // myDb.deleteData("1");
+        //myDb2.deleteData("2");
        final ActionBar actionBar = getSupportActionBar();
        actionBar.setDisplayHomeAsUpEnabled(false);
        actionBar.setTitle("November - 2018");
@@ -75,6 +69,8 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity {
 
         ev1=new ArrayList<>();
         ev2=new ArrayList<>();
+        compareStartDate1=new ArrayList<>();
+        compareStartDate2=new ArrayList<>();
         String buffer = " ";
         String buffer2 = " ";
         //int id=1;
@@ -89,6 +85,8 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity {
             buffer+=("Note: "+ res.getString(6)+"\n\n");
 
             ev1.add(new Event(Color.RED, res.getLong(2), buffer));
+            compareStartDate1.add(new Event(Color.TRANSPARENT, res.getLong(2),getDate(res.getLong(2))));
+
             compactCalendar.addEvent(ev1.get(count));
             count++;
             buffer= " ";
@@ -107,6 +105,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity {
             buffer2+=("Note: "+ res2.getString(8)+"\n\n");
 
             ev2.add(new Event(Color.RED, res2.getLong(2), buffer2));
+            compareStartDate2.add(new Event(Color.TRANSPARENT, res2.getLong(2),getDate(res2.getLong(2))));
             compactCalendar.addEvent(ev2.get(count2));
             count2++;
             buffer2= " ";
@@ -138,10 +137,11 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity {
                 while(k<count){
                     display=ev1.get(k).getData().toString();
 
-                    if(display.contains(formatedDate)){
+                    if(compareStartDate1.get(k).getData().toString().contains(formatedDate) ){
                         DataInPopUp+=display;
                         isEvent=true;
                     }
+
                     display=" ";
                     k++;
                 }
@@ -153,7 +153,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity {
                 while(k2<count2){
                     display2=ev2.get(k2).getData().toString();
 
-                    if(display2.contains(formatedDate)){
+                    if(compareStartDate2.get(k2).getData().toString().contains(formatedDate)){
                         DataInPopUp2+=display2;
                         isEvent2=true;
                     }
@@ -178,8 +178,11 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity {
                     myDialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     myDialog2.show();
                 }
-                if(isEvent==false){
+                else
+                    {
                     Toast.makeText(context,  "NO EVENT ADDED", Toast.LENGTH_SHORT).show();
+                    Intent i=new Intent (getApplicationContext(),AddTask.class);
+                    startActivity(i);
                 }
 
             }
