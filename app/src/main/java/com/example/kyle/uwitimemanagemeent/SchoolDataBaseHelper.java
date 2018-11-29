@@ -1,5 +1,7 @@
-package com.example.kyle.uwitimemanagemeent;
 
+
+package com.example.kyle.uwitimemanagemeent;
+/*
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 public class SchoolDataBaseHelper extends SQLiteOpenHelper{
+
     public static final String DATABASE_NAME = "Database2.db";
     public static final String TABLE_NAME = "schoolTask";
     public static final String COL_1 = "ID";
@@ -20,7 +23,7 @@ public class SchoolDataBaseHelper extends SQLiteOpenHelper{
     public static final String COL_7 = "LOCATION";
     public static final String COL_8 = "CLASS";
     public static final String COL_9 = "NOTE";
-//        public static final String COL_7 = "";
+
 
 
     public SchoolDataBaseHelper(Context context) {
@@ -68,6 +71,11 @@ public class SchoolDataBaseHelper extends SQLiteOpenHelper{
             return true;
     }
 
+    public boolean deleteItem(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, COL_1 + "==" + id, null) > 0;
+    }
+
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);
@@ -75,7 +83,7 @@ public class SchoolDataBaseHelper extends SQLiteOpenHelper{
     }
 
 
-    /*
+
         public Cursor getAllDataId(int id) {
             SQLiteDatabase db = this.getWritableDatabase();
             String table = "TABLE_NAME";
@@ -90,7 +98,7 @@ public class SchoolDataBaseHelper extends SQLiteOpenHelper{
             Cursor cursor = db.query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
             return cursor;
         }
-    */
+
     public boolean updateData(int id,String title,long startdate,long enddate,long starttime, long endtime,String location,String Class,String note) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -118,4 +126,4 @@ public class SchoolDataBaseHelper extends SQLiteOpenHelper{
 
 }
 
-
+*/

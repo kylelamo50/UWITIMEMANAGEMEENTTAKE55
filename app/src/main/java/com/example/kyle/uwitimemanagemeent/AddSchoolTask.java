@@ -25,7 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class AddSchoolTask extends AppCompatActivity implements View.OnClickListener{
-    SchoolDataBaseHelper myDb;
+    DatabaseHelper myDb;
     TextView title;
     EditText startDate,endDate,startTime,endTime,note,loc,classes;
     Button btnAddData,btnviewAll,btnDelete,btnviewUpdate;
@@ -71,63 +71,36 @@ public class AddSchoolTask extends AppCompatActivity implements View.OnClickList
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myDb = new SchoolDataBaseHelper(getApplicationContext());
-                        s = title.getText().toString();
-                        l=loc.getText().toString();
-                        c=classes.getText().toString();
-
-                        if(note.getText().toString().trim().length() == 0){
-                            note.setText("No notes added.");
-                            n=note.getText().toString();
+                        if (startDate.getText().toString().trim().contains("Start Date") || endDate.getText().toString().contains("End Date") || startTime.getText().toString().contains("Start Time") || endTime.getText().toString().contains("End Time") || loc.getText().toString().trim().length() == 0 || classes.getText().toString().trim().length() == 0) {
+                            Toast.makeText(getApplicationContext(), "Data not Inserted.Please fill all information", Toast.LENGTH_LONG).show();
                         }
                         else {
-                            n=note.getText().toString();
+                            myDb = new DatabaseHelper(getApplicationContext());
+                            s = title.getText().toString();
+                            l = loc.getText().toString();
+                            c = classes.getText().toString();
+
+                            if (note.getText().toString().trim().length() == 0) {
+                                note.setText("No notes added.");
+                                n = note.getText().toString();
+                            } else {
+                                n = note.getText().toString();
+                            }
+
+                            boolean isInserted = myDb.insertDataSchoolTask(s, sDate, eDate, sTime, eTime, l, c, n);
+
+
+                            Toast.makeText(getApplicationContext(), "Data Inserted", Toast.LENGTH_LONG).show();
+
+
+                            Intent i = new Intent(getApplicationContext(), DefaultMonthlyCalendarActivity.class);
+                            startActivity(i);
                         }
-
-                        boolean isInserted =myDb.insertData(s, sDate, eDate, sTime, eTime,l,c,n);
-
-
-                        if(isInserted == true)
-                            Toast.makeText(getApplicationContext(),"Data Inserted",Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(getApplicationContext(),"Data not Inserted",Toast.LENGTH_LONG).show();
-
-
-                        Intent i=new Intent(getApplicationContext(), DefaultMonthlyCalendarActivity.class);
-                        startActivity(i);
-
                     }
                 }
         );
 
-        btnviewAll.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(),"loading...",Toast.LENGTH_LONG).show();
 
-                        Cursor res = myDb.getAllData();
-
-                        if(res.getCount() == 0) {
-                            // show message
-                            showMessage("Error","Nothing found");
-                            return;
-                        }
-                        StringBuffer buffer = new StringBuffer();
-                        while (res.moveToNext()) {
-                            buffer.append("Id :"+ res.getString(0)+"\n");
-                            buffer.append("Title :"+ res.getString(1)+"\n");
-                            buffer.append("StartDate :"+ res.getLong(2)+"\n");
-                            buffer.append("EndDate :"+ res.getLong(3)+"\n");
-                            buffer.append("StarTtime: "+ getTime(res.getLong(4))+"\n");
-                            buffer.append("EndTime: "+ getTime(res.getLong(5))+"\n");
-                            buffer.append("Location :"+ res.getString(6)+"\n");
-                            buffer.append("Class :"+ res.getString(7)+"\n");
-                            buffer.append("Note: "+ res.getString(8)+"\n\n");
-                        }
-
-                        // Show all data
-                        showMessage("Data",buffer.toString());                    }});
 
 //
 

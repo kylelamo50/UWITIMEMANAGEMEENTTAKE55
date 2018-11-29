@@ -17,12 +17,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".WelcomeActivity" />
-        <activity android:name=".DefaultMonthlyCalendarActivity" />
+        <activity
+            android:name=".DefaultMonthlyCalendarActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddTask" />
         <activity android:name=".AddTaskDetails" />
         <activity android:name=".DatabaseHelper" />
         <activity android:name=".AddSchoolTask" />
-        <activity android:name=".SchoolDataBaseHelper"></activity>
+        <activity android:name=".SchoolDataBaseHelper" />
+        <activity android:name=".CardActivity" />
+        <activity android:name=".ShowTaskDetails" />
+        <activity android:name=".SchoolCard" />
+        <activity android:name=".SchoolCardActivity"></activity>
     </application>
 
 </manifest>

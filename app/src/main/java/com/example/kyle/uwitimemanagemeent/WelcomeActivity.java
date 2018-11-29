@@ -20,6 +20,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private TextView tv;
     private UserSessionActivity session;
     private ImageView image;
+    DatabaseHelper myDb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,43 +30,13 @@ public class WelcomeActivity extends AppCompatActivity {
         image=(ImageView)findViewById(R.id.imageView);
         back=(Button)findViewById(R.id.button3);
         back.setOnClickListener(new  Button_Clicker());
-
+        myDb = new DatabaseHelper(getApplicationContext());
         calendar=(Button)findViewById(R.id.button2);
         calendar.setOnClickListener(new  Button_Clicker());
         // v=getWindow().getDecorView();
-        String b="";
-        try{
-            FileInputStream i1= openFileInput("faculty.txt");
-            int size1=i1.available();
-            byte[] buffer1= new  byte[size1];
-            i1.read(buffer1);
-            i1.close();
-            b=new  String(buffer1);
-        } catch (IOException e) {
-            e.printStackTrace();
-           }
-
-           if(b.equals("Faculty of Engineering")){
-              image.setImageResource(R.drawable.engine);
-           }
-        if(b.equals("Faculty of Food and Agriculture")){
-            image.setImageResource(R.drawable.food);
-        }
-        if(b.equals("Faculty of Science and Technology")){
-            image.setImageResource(R.drawable.tech);
-        }
-        if(b.equals("Faculty of Medical Sciences")){
-            image.setImageResource(R.drawable.med);
-        }
-        if(b.equals("Faculty of Social Sciences")){
-            image.setImageResource(R.drawable.oc);
-        }
-        if(b.equals("aculty of Humanities and Education")){
-            image.setImageResource(R.drawable.human);
-        }
-        if(b.equals("Faculty of Law")){
-            image.setImageResource(R.drawable.la);
-        }
+        FacultyPicked f=new FacultyPicked(getApplicationContext());
+        int icon=f.getIcon();
+        image.setImageResource(icon);
 
         String text="";
         try{
@@ -93,6 +64,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         public void onClick(View v) {
             if (v == back) {
+                myDb.deleteAllDataTip();
                 session.writeLoginStatus(false);
                 Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(i);

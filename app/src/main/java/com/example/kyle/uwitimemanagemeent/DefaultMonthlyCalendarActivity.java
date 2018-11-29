@@ -8,6 +8,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -24,16 +26,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class DefaultMonthlyCalendarActivity extends AppCompatActivity {
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 
-   private ArrayList<String> text;
+public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+    private DrawerLayout drawer;
+    private ArrayList<String> text;
     Dialog myDialog,myDialog2;
-
     ImageButton add;
     String s = "";
     Intent i;
     DatabaseHelper myDb;
-    SchoolDataBaseHelper myDb2;
+    //SchoolDataBaseHelper myDb2;
     CompactCalendarView compactCalendar;
     int count=0;
     int count2=0;
@@ -47,6 +55,19 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.default_monthly_calendar);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle= new ActionBarDrawerToggle(this,drawer,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView =  findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setTitle("November - 2018");
         myDialog = new Dialog(this);
         myDialog2 = new Dialog(this);
         compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
@@ -54,17 +75,18 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity {
         add = (ImageButton) findViewById(R.id.add_task_button);
 
         myDb = new DatabaseHelper(getApplicationContext());
-        myDb.getAllData();
-        myDb2 = new SchoolDataBaseHelper(getApplicationContext());
-        myDb2.getAllData();
+       // myDb.getAllData();
+        //myDb2 = new SchoolDataBaseHelper(getApplicationContext());
+       // myDb2.getAllData();
        // myDb.deleteData("1");
         //myDb2.deleteData("2");
-       final ActionBar actionBar = getSupportActionBar();
-       actionBar.setDisplayHomeAsUpEnabled(false);
-       actionBar.setTitle("November - 2018");
 
-        Cursor res = myDb.getAllData();
-        Cursor res2 = myDb2.getAllData();
+     //  final ActionBar actionBar = getSupportActionBar();
+     //  actionBar.setDisplayHomeAsUpEnabled(false);
+      // actionBar.setTitle("November - 2018");
+
+        Cursor res = myDb.getAllDataGeneral();
+        Cursor res2 = myDb.getAllDataSchool();
        // random();
 
         ev1=new ArrayList<>();
@@ -236,23 +258,21 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity {
         TextView ClosePopUp;
         TextView t;
 
-        text=new ArrayList<>();
-        text.add("Don't drink and drive.Stay in school an party hard");
-        text.add("Make sure you’re engaging in activities that support your business goals, both short- and long-term. Everything else is a potential time-waster");
-        text.add("Prioritize wisely.Looking at what goes into making up your day, where do your activities fit into these categories?");
-        text.add("You’re the boss. If you have to decline a request in order to attend to what’s truly important and urgent, do not hesitate to do so.");
-        text.add("One of the worst things you can do is jump into the workday with no clear idea about what needs to get done.Hence, use this app everyday :)");
-        text.add("Start paying attention to the number of times someone interrupts you when you’re in the midst of an important task. Track self-induced interruptions, too, particularly those of the social media variety. Your smartphone is extremely useful, but it’s also addictive.");
-        text.add("Running a successful small business depends upon the owner’s ability to think about what lies ahead and not get mired in day-to-day operations");
-        text.add("Be sure to get plenty of sleep and exercise. An alert mind is a high-functioning mind and one that’s less tolerant of time-wasting activities.");
-        text.add("Don't focus on gyal.Let gyal focus on u");
-        text.add("Fellas be who u want to be.You are more than a 3.6 gpa");
+        Cursor r=myDb.getAllDataTip();
+        int countTip=1;
+        while (r.moveToNext()){
+            countTip++;
+        }
         Random rand=new Random();
-        int num=rand.nextInt(10);
+        int num=rand.nextInt(countTip);
         myDialog.setContentView(R.layout.popup_xml);
-
         t=(TextView) myDialog.findViewById(R.id.data);
-        t.setText(text.get(num));
+
+        Cursor rTip=myDb.getTipDataBasedOnId(num);
+        rTip.moveToFirst();
+         // Toast.makeText(DefaultMonthlyCalendarActivity.this, "f"+ rTip.getString(rTip.getColumnIndex("TIP")), Toast.LENGTH_SHORT).show();
+
+        t.setText(rTip.getString(rTip.getColumnIndex("TIP")));
         ClosePopUp=(TextView)myDialog.findViewById(R.id.close);
         ClosePopUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -265,4 +285,56 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity {
 
 
     }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.nav_drawer, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_general) {
+            Intent i = new Intent(getApplicationContext(), CardActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_school) {
+            //Snackbar.make(findViewById(R.id.drawer_layout) , "Replace with your own action", Snackbar.LENGTH_LONG)
+                   // .setAction("Action", null).show();
+            Intent i2 = new Intent(getApplicationContext(), SchoolCardActivity.class);
+            startActivity(i2);
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }
+

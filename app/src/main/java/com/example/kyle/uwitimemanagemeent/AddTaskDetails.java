@@ -24,14 +24,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddTaskDetails extends AppCompatActivity implements View.OnClickListener{
+public class AddTaskDetails extends AppCompatActivity implements View.OnClickListener {
     DatabaseHelper myDb;
     TextView title;
-    EditText startDate,endDate,startTime,endTime,note;
-    Button btnAddData,btnviewAll,btnDelete,btnviewUpdate;
-    Button start_T,start_D,end_T,end_D;
+    EditText startDate, endDate, startTime, endTime, note;
+    Button btnAddData, btnviewAll, btnDelete, btnviewUpdate;
+    Button start_T, start_D, end_T, end_D;
     private int mYear, mMonth, mDay, mHour, mMinute;
-    private long sDate,sTime,eDate,eTime;
+    private long sDate, sTime, eDate, eTime;
     String s = "";
     String n = "";
     CompactCalendarView compactCalendar;
@@ -45,18 +45,18 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
         final ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        title = (TextView)findViewById(R.id.school_title);
-        startDate = (EditText)findViewById(R.id.task_startDate);
-        endDate = (EditText)findViewById(R.id.task_endDate);
-        startTime = (EditText)findViewById(R.id.task_startTime);
-        endTime = (EditText)findViewById(R.id.task_endTime);
-        start_T= findViewById(R.id.Tstart);
-        start_D= findViewById(R.id.Dstart);
-        end_T= findViewById(R.id.Tend);
-        end_D= findViewById(R.id.Dend);
+        title = (TextView) findViewById(R.id.school_title);
+        startDate = (EditText) findViewById(R.id.task_startDate);
+        endDate = (EditText) findViewById(R.id.task_endDate);
+        startTime = (EditText) findViewById(R.id.task_startTime);
+        endTime = (EditText) findViewById(R.id.task_endTime);
+        start_T = findViewById(R.id.Tstart);
+        start_D = findViewById(R.id.Dstart);
+        end_T = findViewById(R.id.Tend);
+        end_D = findViewById(R.id.Dend);
         note = findViewById(R.id.task_note);
-        btnAddData = (Button)findViewById(R.id.task_save);
-        btnviewAll = (Button)findViewById(R.id.all);
+        btnAddData = (Button) findViewById(R.id.task_save);
+        btnviewAll = (Button) findViewById(R.id.all);
 
 //        btnviewUpdate= (Button)findViewById(R.id.button_update);
 //        btnDelete= (Button)findViewById(R.id.button_delete);
@@ -74,64 +74,70 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        myDb = new DatabaseHelper(getApplicationContext());
-                        s = title.getText().toString();
-
-                        if(note.getText().toString().trim().length() == 0){
-                            note.setText("No notes added.");
-                            n=note.getText().toString();
+                        if (startDate.getText().toString().trim().contains("Start Date") || endDate.getText().toString().contains("End Date") || startTime.getText().toString().contains("Start Time") || endTime.getText().toString().contains("End Time")) {
+                            Toast.makeText(getApplicationContext(), "Data not Inserted.Please fill out Date and Time information", Toast.LENGTH_LONG).show();
                         }
-                        else {
-                            n=note.getText().toString();
+                        else{
+                            myDb = new DatabaseHelper(getApplicationContext());
+                            s = title.getText().toString();
+
+                            if (note.getText().toString().trim().length() == 0) {
+                                note.setText("No notes added.");
+                                n = note.getText().toString();
+                            } else {
+                                n = note.getText().toString();
+                            }
+
+                            myDb.insertDataGeneralTask(s, sDate, eDate, sTime, eTime, n);
+
+
+
+                                Toast.makeText(getApplicationContext(), "Data Inserted", Toast.LENGTH_SHORT).show();
+
+
+                            Intent i = new Intent(getApplicationContext(), DefaultMonthlyCalendarActivity.class);
+                            startActivity(i);
+
                         }
-
-                        boolean isInserted =myDb.insertData(s, sDate, eDate, sTime, eTime,n);
-
-
-                        if(isInserted == true)
-                           Toast.makeText(getApplicationContext(),"Data Inserted",Toast.LENGTH_LONG).show();
-                        else
-                           Toast.makeText(getApplicationContext(),"Data not Inserted",Toast.LENGTH_LONG).show();
-
-
-                        Intent i=new Intent(getApplicationContext(), DefaultMonthlyCalendarActivity.class);
-                        startActivity(i);
 
                     }
                 }
         );
-
+  /*
         btnviewAll.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(),"loading...",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "loading...", Toast.LENGTH_LONG).show();
 
                         Cursor res = myDb.getAllData();
 
-                        if(res.getCount() == 0) {
+                        if (res.getCount() == 0) {
                             // show message
-                            showMessage("Error","Nothing found");
-                            return;
+                            showMessage("Error", "Nothing found");
+
                         }
                         StringBuffer buffer = new StringBuffer();
                         while (res.moveToNext()) {
-                            buffer.append("Id :"+ res.getString(0)+"\n");
-                            buffer.append("Title :"+ res.getString(1)+"\n");
-                            buffer.append("StartDate :"+ res.getLong(2)+"\n");
-                            buffer.append("EndDate :"+ res.getLong(3)+"\n");
-                            buffer.append("StarTtime: "+ getTime(res.getLong(4))+"\n");
-                            buffer.append("EndTime: "+ getTime(res.getLong(5))+"\n");
-                            buffer.append("Note: "+ res.getString(6)+"\n\n");
+                            buffer.append("Id :" + res.getString(0) + "\n");
+                            buffer.append("Title :" + res.getString(1) + "\n");
+                            buffer.append("StartDate :" + res.getLong(2) + "\n");
+                            buffer.append("EndDate :" + res.getLong(3) + "\n");
+                            buffer.append("StarTtime: " + getTime(res.getLong(4)) + "\n");
+                            buffer.append("EndTime: " + getTime(res.getLong(5)) + "\n");
+                            buffer.append("Note: " + res.getString(6) + "\n");
+                            buffer.append("Duration: " + res.getString(7) + "\n");
+
                         }
 
                         // Show all data
-                        showMessage("Data",buffer.toString());                    }});
+                        showMessage("Data", buffer.toString());
+                    }
+                });
 
 //
-
+*/
     }
-
 
 
     @Override
@@ -156,14 +162,12 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                             startDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
 
-
                             try {
-                                String z=startDate.getText().toString();
+                                String z = startDate.getText().toString();
 
                                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-                                Date date = (Date)formatter.parse(z);
+                                Date date = (Date) formatter.parse(z);
                                 sDate = date.getTime();
-
 
 
                             } catch (ParseException e) {
@@ -194,9 +198,9 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                             endDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
                             try {
-                                String z=endDate.getText().toString();
+                                String z = endDate.getText().toString();
                                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-                                Date date = (Date)formatter.parse(z);
+                                Date date = (Date) formatter.parse(z);
                                 eDate = date.getTime();
 
                             } catch (ParseException e) {
@@ -208,7 +212,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
         }
-        if (v == start_T ) {
+        if (v == start_T) {
 
             // Get Current Time
             final Calendar c = Calendar.getInstance();
@@ -222,19 +226,18 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
-                            Time t = Time.valueOf(Integer.toString(hourOfDay)+":"+Integer.toString(minute)+":00");
+                            Time t = Time.valueOf(Integer.toString(hourOfDay) + ":" + Integer.toString(minute) + ":00");
                             sTime = t.getTime();
-                            if(hourOfDay >=12) {
+                            if (hourOfDay >= 12) {
                                 startTime.setText(hourOfDay + ":" + minute + " pm");
-                            }
-                            else {
+                            } else {
                                 startTime.setText(hourOfDay + ":" + minute + " am");
                             }
                         }
                     }, mHour, mMinute, false);
             timePickerDialog.show();
         }
-        if (v == end_T ) {
+        if (v == end_T) {
 
             // Get Current Time
             final Calendar c = Calendar.getInstance();
@@ -248,12 +251,11 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
-                            Time t = Time.valueOf(Integer.toString(hourOfDay)+":"+Integer.toString(minute)+":00");
+                            Time t = Time.valueOf(Integer.toString(hourOfDay) + ":" + Integer.toString(minute) + ":00");
                             eTime = t.getTime();
-                            if(hourOfDay >=12) {
+                            if (hourOfDay >= 12) {
                                 endTime.setText(hourOfDay + ":" + minute + " pm");
-                            }
-                            else {
+                            } else {
                                 endTime.setText(hourOfDay + ":" + minute + " am");
                             }
                         }
@@ -263,30 +265,29 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    public String getDate(long timeStamp){
+    public String getDate(long timeStamp) {
 
-        try{
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             Date netDate = (new Date(timeStamp));
             return sdf.format(netDate);
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             return "xx";
         }
     }
 
-    public String getTime(long timeStamp){
+    public String getTime(long timeStamp) {
 
-        try{
+        try {
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
             Date netDate = (new Date(timeStamp));
             return sdf.format(netDate);
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             return "xx";
         }
     }
-    public void showMessage(String title,String Message){
+
+    public void showMessage(String title, String Message) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
@@ -294,73 +295,4 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
         builder.setMessage(Message);
         builder.show();
     }
-//    public void DeleteData() {
-//        btnDelete.setOnClickListener(
 }
-
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Integer deletedRows = myDb.deleteData(editTextId.getText().toString());
-//                        if(deletedRows > 0)
-//                            Toast.makeText(MainActivity.this,"Data Deleted",Toast.LENGTH_LONG).show();
-//                        else
-//                            Toast.makeText(MainActivity.this,"Data not Deleted",Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//        );
-//    }
-//    public void UpdateData() {
-//        btnviewUpdate.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        boolean isUpdate = myDb.updateData(editTextId.getText().toString(),
-//                                editName.getText().toString(),
-//                                editSurname.getText().toString(),editMarks.getText().toString());
-//                        if(isUpdate == true)
-//                            Toast.makeText(MainActivity.this,"Data Update",Toast.LENGTH_LONG).show();
-//                        else
-//                            Toast.makeText(MainActivity.this,"Data not Updated",Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//        );
-//    }
-//
-//    public void viewAll() {
-//        btnviewAll.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Cursor res = myDb.getAllData();
-//                        if(res.getCount() == 0) {
-//                            // show message
-//                            showMessage("Error","Nothing found");
-//                            return;
-//                        }
-//
-//                        StringBuffer buffer = new StringBuffer();
-//                        while (res.moveToNext()) {
-//                            buffer.append("Id :"+ res.getString(0)+"\n");
-//                            buffer.append("Name :"+ res.getString(1)+"\n");
-//                            buffer.append("Surname :"+ res.getString(2)+"\n");
-//                            buffer.append("Marks :"+ res.getString(3)+"\n\n");
-//                        }
-//
-//                        // Show all data
-//                        showMessage("Data",buffer.toString());
-//                    }
-//                }
-//        );
-//    }
-//
-//    public void showMessage(String title,String Message){
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setCancelable(true);
-//        builder.setTitle(title);
-//        builder.setMessage(Message);
-//        builder.show();
-//    }
-//
-//
-//}

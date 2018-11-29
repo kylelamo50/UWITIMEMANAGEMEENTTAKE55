@@ -47,6 +47,17 @@
         app:layout_constraintStart_toEndOf="@+id/textViewDailyTask"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/data"
+        android:layout_width="312dp"
+        android:layout_height="98dp"
+        android:layout_marginBottom="21dp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDailyTask" />
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="277dp"
@@ -58,16 +69,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/close"
         app:srcCompat="@drawable/uwi" />
-
-    <TextView
-        android:id="@+id/data"
-        android:layout_width="312dp"
-        android:layout_height="98dp"
-        android:layout_marginBottom="21dp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDailyTask" />
 
 </android.support.constraint.ConstraintLayout>
