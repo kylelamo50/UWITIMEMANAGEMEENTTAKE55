@@ -3,14 +3,16 @@ package com.example.kyle.uwitimemanagemeent;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.AlertDialog;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -20,29 +22,30 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddTaskDetails extends AppCompatActivity implements View.OnClickListener {
+public class ShowAndUpdateGenTask extends AppCompatActivity implements View.OnClickListener {
+
+
     DatabaseHelper myDb;
     TextView title;
     EditText startDate, endDate, startTime, endTime, note;
-    Button btnAddData, btnviewAll, btnDelete, btnviewUpdate;
+    Button SaveandUpdate, btnviewAll, btnDelete, btnviewUpdate;
     Button start_T, start_D, end_T, end_D;
     private int mYear, mMonth, mDay, mHour, mMinute;
     private long sDate, sTime, eDate, eTime;
     String s = "";
     String n = "";
-
-    String date="";
-
+    int id;
+    ArrayList<Card> cards;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_task_details);
+        setContentView(R.layout.activity_show_update_gen_task);
         final ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
         title = (TextView) findViewById(R.id.general_title);
         startDate = (EditText) findViewById(R.id.task_startDate);
         endDate = (EditText) findViewById(R.id.task_endDate);
@@ -53,26 +56,34 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
         end_T = findViewById(R.id.Tend);
         end_D = findViewById(R.id.Dend);
         note = findViewById(R.id.task_note);
-        btnAddData = (Button) findViewById(R.id.task_save);
-        btnviewAll = (Button) findViewById(R.id.all);
+        SaveandUpdate = (Button) findViewById(R.id.task_save);
+        myDb=new DatabaseHelper(getApplicationContext());
+        String posID=getIntent().getStringExtra("E");
+        id=Integer.parseInt(posID);
+      //  Toast.makeText(getApplicationContext(), " ccc"+i, Toast.LENGTH_LONG).show();
 
-        date=getIntent().getStringExtra("EE");
-        startDate.setText(date);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        Date date1 = null;
-        try {
-            date1 = (Date) formatter.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        sDate = date1.getTime();
+        Cursor rGeneral=myDb.getGeneralDataBasedOnId(id);
+        rGeneral.moveToFirst();
+
+        sDate=rGeneral.getLong(rGeneral.getColumnIndex("STARTDATE"));
+        eDate=rGeneral.getLong(rGeneral.getColumnIndex("ENDDATE"));
+        sTime=rGeneral.getLong(rGeneral.getColumnIndex("STARTTIME"));
+        eTime=rGeneral.getLong(rGeneral.getColumnIndex("ENDTIME"));
+        n=rGeneral.getString(rGeneral.getColumnIndex("NOTE"));
+
+        startDate.setText(getDate(rGeneral.getLong(rGeneral.getColumnIndex("STARTDATE"))));
+        endDate.setText(getDate(rGeneral.getLong(rGeneral.getColumnIndex("ENDDATE"))));
+        startTime.setText(getTime(rGeneral.getLong(rGeneral.getColumnIndex("STARTTIME"))));
+        endTime.setText(getTime(rGeneral.getLong(rGeneral.getColumnIndex("ENDTIME"))));
+        note.setText(rGeneral.getString(rGeneral.getColumnIndex("NOTE")));
+
 
         start_T.setOnClickListener(this);
         start_D.setOnClickListener(this);
         end_T.setOnClickListener(this);
         end_D.setOnClickListener(this);
 
-        btnAddData.setOnClickListener(
+        SaveandUpdate.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -80,7 +91,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                             Toast.makeText(getApplicationContext(), "Data not Inserted.Please fill out Date and Time information", Toast.LENGTH_LONG).show();
                         }
                         else{
-                            myDb = new DatabaseHelper(getApplicationContext());
+                            //myDb = new DatabaseHelper(getApplicationContext());
                             s = title.getText().toString();
 
                             if (note.getText().toString().trim().length() == 0) {
@@ -90,11 +101,11 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                                 n = note.getText().toString();
                             }
 
-                            myDb.insertDataGeneralTask(s, sDate, eDate, sTime, eTime, n);
+                            myDb.updateDataGeneral(id,s, sDate, eDate, sTime, eTime, n);
 
 
 
-                                Toast.makeText(getApplicationContext(), "Data Inserted", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Data Updated", Toast.LENGTH_SHORT).show();
 
 
                             Intent i = new Intent(getApplicationContext(), DefaultMonthlyCalendarActivity.class);
@@ -107,7 +118,6 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
         );
 
     }
-
 
     @Override
     public void onClick(View v) {
@@ -233,7 +243,6 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-
     public String getDate(long timeStamp) {
 
         try {
@@ -244,7 +253,6 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
             return "xx";
         }
     }
-
     public String getTime(long timeStamp) {
 
         try {
@@ -255,16 +263,6 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
             return "xx";
         }
     }
-
-    public void showMessage(String title, String Message) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(Message);
-        builder.show();
-    }
-
 
 
 }

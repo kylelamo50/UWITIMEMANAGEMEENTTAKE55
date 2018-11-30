@@ -42,13 +42,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (session.readLoginStatus()==false) {
             preLoadTips();
-            Toast.makeText(RegisterActivity.this, "LOADING TIPS", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(RegisterActivity.this, "LOADING TIPS", Toast.LENGTH_SHORT).show();
             Cursor res = myDb.getAllDataTip();
-            StringBuffer buffer = new StringBuffer();
-            while (res.moveToNext()) {
-                buffer.append("Tip :" + res.getString(1) + "\n");
-            }
-            showMessage("Data",buffer.toString());
+           // StringBuffer buffer = new StringBuffer();
+           // while (res.moveToNext()) {
+              //  buffer.append("Tip :" + res.getString(1) + "\n");
+            //}
+           // showMessage("Data",buffer.toString());
         }
 
 

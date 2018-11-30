@@ -7,7 +7,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.AlertDialog;
-import android.database.Cursor;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -36,6 +35,7 @@ public class AddSchoolTask extends AppCompatActivity implements View.OnClickList
     String l=" ";
     String c=" ";
     String n = "";
+    String date = "";
     CompactCalendarView compactCalendar;
     private static int titleCount = 0;
 
@@ -47,7 +47,7 @@ public class AddSchoolTask extends AppCompatActivity implements View.OnClickList
         final ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        title = (TextView)findViewById(R.id.school_title);
+        title = (TextView)findViewById(R.id.general_title);
         startDate = (EditText)findViewById(R.id.task_startDate);
         endDate = (EditText)findViewById(R.id.task_endDate);
         startTime = (EditText)findViewById(R.id.task_startTime);
@@ -60,7 +60,18 @@ public class AddSchoolTask extends AppCompatActivity implements View.OnClickList
         end_D= findViewById(R.id.Dend);
         note = findViewById(R.id.task_note);
         btnAddData = (Button)findViewById(R.id.task_save);
-        btnviewAll = (Button)findViewById(R.id.all);
+
+        date=getIntent().getStringExtra("EE");
+        startDate.setText(date);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date date1 = null;
+        try {
+            date1 = (Date) formatter.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        sDate = date1.getTime();
 
         start_T.setOnClickListener(this);
         start_D.setOnClickListener(this);

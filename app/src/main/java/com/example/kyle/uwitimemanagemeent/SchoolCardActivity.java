@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -21,7 +20,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class SchoolCardActivity extends AppCompatActivity {
 
@@ -32,7 +30,7 @@ public class SchoolCardActivity extends AppCompatActivity {
     DatabaseHelper myDb;
     ArrayList<SchoolCard> cards;
     private static String LOG_TAG = "SchoolCardViewActivity";
-    private ImageButton delete;
+    private ImageButton delete,home;
     private Button open;
     private int posID=0;
     ImageView i;
@@ -45,18 +43,20 @@ public class SchoolCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_school_card);
         delete = (ImageButton)findViewById(R.id.delete_button);
+        home = (ImageButton)findViewById(R.id.pinkHome);
         open = (Button)findViewById(R.id.open_button);
         myDb = new DatabaseHelper(getApplicationContext());
         i=(ImageView)findViewById(R.id.imageViewlogo);
-
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
 
         Cursor res = myDb.getAllDataSchool();
         if(res.getCount() == 0) {
             // show message
-            Toast.makeText(getApplicationContext(),"Database Empty!",Toast.LENGTH_LONG).show();
-            Intent i=new Intent(getApplicationContext(),AddTask.class);
-            startActivity(i);
+            Toast.makeText(getApplicationContext(),"Empty!",Toast.LENGTH_LONG).show();
+           // Intent i=new Intent(getApplicationContext(),AddTask.class);
+           // startActivity(i);
         }
 
         String b="";
@@ -70,38 +70,15 @@ public class SchoolCardActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-         FacultyPicked f=new FacultyPicked(getApplicationContext());
+        FacultyPicked f=new FacultyPicked(getApplicationContext());
         int a=f.getIcon();
 
         cards = new ArrayList<SchoolCard>();
         while (res.moveToNext()) {
             cards.add(new SchoolCard(res.getString(0),res.getString(1),getDate(res.getLong(2)),a));
-            /*
-            if(b.equals("Faculty of Engineering")){
-                cards.add(new SchoolCard(res.getString(0),res.getString(1),getDate(res.getLong(2)),R.drawable.engine));
 
-            }
-            if(b.equals("Faculty of Food and Agriculture")){
-                cards.add(new SchoolCard(res.getString(0),res.getString(1),getDate(res.getLong(2)),R.drawable.food));
-            }
-            if(b.equals("Faculty of Science and Technology")){
-                cards.add(new SchoolCard(res.getString(0),res.getString(1),getDate(res.getLong(2)),R.drawable.tech));
-            }
-            if(b.equals("Faculty of Medical Sciences")){
-                cards.add(new SchoolCard(res.getString(0),res.getString(1),getDate(res.getLong(2)),R.drawable.med));
-            }
-            if(b.equals("Faculty of Social Sciences")){
-                cards.add(new SchoolCard(res.getString(0),res.getString(1),getDate(res.getLong(2)),R.drawable.oc));
-            }
-            if(b.equals("aculty of Humanities and Education")){
-                cards.add(new SchoolCard(res.getString(0),res.getString(1),getDate(res.getLong(2)),R.drawable.human));
-            }
-            if(b.equals("Faculty of Law")){
-                cards.add(new SchoolCard(res.getString(0),res.getString(1),getDate(res.getLong(2)),R.drawable.la));
-            }
-            */
         }
-        cards.add(new SchoolCard(null," "," ",0));
+        //cards.add(new SchoolCard(null," "," ",0));
         rv = (RecyclerView) findViewById(R.id.my_recycler_view);
         rv.setHasFixedSize(true);
         lm = new LinearLayoutManager(this);
@@ -111,28 +88,51 @@ public class SchoolCardActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(posID == cards.size()){
-                    Toast.makeText(getApplicationContext(), "All General tasks removed" + posID, Toast.LENGTH_LONG).show();
-                    Intent i=new Intent(getApplicationContext(),DefaultMonthlyCalendarActivity.class);
-                    startActivity(i);
+                SchoolCard c;
+                if(cards.size()>0) {
+                    c = cards.get(posID);
+                    //  Toast.makeText(getApplicationContext(), "ccc" + cards.size() + "ggg " + posID, Toast.LENGTH_LONG).show();
+                    boolean a = myDb.deleteItemSchool(c.getId());
+                    //  Toast.makeText(getApplicationContext(), "ccc" + a, Toast.LENGTH_LONG).show();
+
+                    cards.remove(posID);
+
+                    mAdapter.notifyItemRemoved(posID);
                 }
-                cards.remove(posID);
-                SchoolCard c = cards.get(posID);
-                //  Toast.makeText(getApplicationContext(), "ccc" + cards.size() + "ggg " + posID, Toast.LENGTH_LONG).show();
-                boolean a = myDb.deleteItemSchool(c.getId());
-                //  Toast.makeText(getApplicationContext(), "ccc" + a, Toast.LENGTH_LONG).show();
-
-
-                mAdapter.notifyItemRemoved(posID);
+                else
+                    Toast.makeText(SchoolCardActivity.this, "ALL ITEMS DELETED", Toast.LENGTH_SHORT).show();
             }});
         open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(v == open) {
-                    Intent i = new Intent(getApplicationContext(), ShowTaskDetails.class);
-                    startActivity(i);
+                    SchoolCard c;
+                    if(cards.size()==0) {
+                        Toast.makeText(SchoolCardActivity.this, "ALL ITEMS DELETED", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        c = cards.get(posID);
+                        int id = c.getId();
+                        String pos = Integer.toString(id);
+                        Intent i = new Intent(getApplicationContext(), ShowAndUpdateSchTask.class);
+                        i.putExtra("R", pos);
+                        startActivity(i);
+                    }
+
 
                 } }});
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v == home) {
+                    Intent i = new Intent(getApplicationContext(), DefaultMonthlyCalendarActivity.class);
+                    startActivity(i);
+                }
+
+            }
+
+        });
 
     }
 

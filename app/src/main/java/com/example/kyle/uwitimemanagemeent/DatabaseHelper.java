@@ -152,17 +152,28 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     public Cursor getTipDataBasedOnId(int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        //String query = "select * from " + TABLE_NAME2 + " where title=?";
-        //String query  = "select * from" + TABLE_NAME2 + TIP_COL_1 + "==" + id;
 
-       // String query="SELECT * FROM tips WHERE ID = ?";
-        //String[] selectionArgs = {"id"};
-       // Cursor res = db.rawQuery(query,selectionArgs);
-        //Cursor res = db.rawQuery(query,null);
         Cursor res = db.query(TABLE_NAME2, new String[] {TIP_COL_2}, TIP_COL_1+"==" + id, null, null, null, null);
         return res;
-        //        return res.getString(1);
+
     }
+
+    public Cursor getGeneralDataBasedOnId(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor res = db.query(TABLE_NAME, new String[] {COL_3,COL_4,COL_5,COL_6,COL_7}, COL_1+"==" + id, null, null, null, null);
+        return res;
+
+    }
+
+    public Cursor getSchoolDataBasedOnId(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor res = db.query(TABLE_NAME3, new String[] {SCH_COL_3,SCH_COL_4,SCH_COL_5,SCH_COL_6,SCH_COL_7,SCH_COL_8,SCH_COL_9}, SCH_COL_1+"==" + id, null, null, null, null);
+        return res;
+
+    }
+
 
     public Cursor getAllDataSchool() {
         SQLiteDatabase db = this.getWritableDatabase();

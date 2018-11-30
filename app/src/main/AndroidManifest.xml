@@ -26,9 +26,10 @@
         <activity android:name=".AddSchoolTask" />
         <activity android:name=".SchoolDataBaseHelper" />
         <activity android:name=".CardActivity" />
-        <activity android:name=".ShowTaskDetails" />
+        <activity android:name=".ShowAndUpdateGenTask" />
         <activity android:name=".SchoolCard" />
-        <activity android:name=".SchoolCardActivity"></activity>
+        <activity android:name=".SchoolCardActivity" />
+        <activity android:name=".ShowAndUpdateSchTask"></activity>
     </application>
 
 </manifest>

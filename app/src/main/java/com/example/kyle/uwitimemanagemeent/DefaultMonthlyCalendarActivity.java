@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -45,6 +46,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
     CompactCalendarView compactCalendar;
     int count=0;
     int count2=0;
+    String formattedDate="";
 
     ArrayList<Event> ev1;
     ArrayList<Event> ev2;
@@ -126,7 +128,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
             buffer2+=("Class: "+ res2.getString(7)+"\n");
             buffer2+=("Note: "+ res2.getString(8)+"\n\n");
 
-            ev2.add(new Event(Color.RED, res2.getLong(2), buffer2));
+            ev2.add(new Event(Color.BLUE, res2.getLong(2), buffer2));
             compareStartDate2.add(new Event(Color.TRANSPARENT, res2.getLong(2),getDate(res2.getLong(2))));
             compactCalendar.addEvent(ev2.get(count2));
             count2++;
@@ -149,8 +151,8 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
 
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date);
-                String formatedDate = cal.get(Calendar.DATE) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" +cal.get(Calendar.YEAR);
-                Toast.makeText(context,  formatedDate, Toast.LENGTH_SHORT).show();
+                formattedDate = cal.get(Calendar.DATE) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" +cal.get(Calendar.YEAR);
+                Toast.makeText(context,  formattedDate, Toast.LENGTH_SHORT).show();
 
                 String display=" ";
                 boolean isEvent=false;
@@ -159,7 +161,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
                 while(k<count){
                     display=ev1.get(k).getData().toString();
 
-                    if(compareStartDate1.get(k).getData().toString().contains(formatedDate) ){
+                    if(compareStartDate1.get(k).getData().toString().contains(formattedDate) ){
                         DataInPopUp+=display;
                         isEvent=true;
                     }
@@ -175,7 +177,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
                 while(k2<count2){
                     display2=ev2.get(k2).getData().toString();
 
-                    if(compareStartDate2.get(k2).getData().toString().contains(formatedDate)){
+                    if(compareStartDate2.get(k2).getData().toString().contains(formattedDate)){
                         DataInPopUp2+=display2;
                         isEvent2=true;
                     }
@@ -204,6 +206,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
                     {
                     Toast.makeText(context,  "NO EVENT ADDED", Toast.LENGTH_SHORT).show();
                     Intent i=new Intent (getApplicationContext(),AddTask.class);
+                    i.putExtra("Extra", formattedDate);
                     startActivity(i);
                 }
 
@@ -222,6 +225,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
             public void onClick(View v) {
                 if(v == add) {
                     i = new Intent(getApplicationContext(), AddTask.class);
+
                     startActivity(i);
 
                 } }});
@@ -259,18 +263,19 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
         TextView t;
 
         Cursor r=myDb.getAllDataTip();
-        int countTip=1;
+        int countTip=0;
         while (r.moveToNext()){
             countTip++;
         }
+       //   Toast.makeText(DefaultMonthlyCalendarActivity.this, "f"+ countTip, Toast.LENGTH_SHORT).show();
         Random rand=new Random();
-        int num=rand.nextInt(countTip);
+        int num=rand.nextInt(countTip-1 + 1) + 1;
         myDialog.setContentView(R.layout.popup_xml);
         t=(TextView) myDialog.findViewById(R.id.data);
 
         Cursor rTip=myDb.getTipDataBasedOnId(num);
         rTip.moveToFirst();
-         // Toast.makeText(DefaultMonthlyCalendarActivity.this, "f"+ rTip.getString(rTip.getColumnIndex("TIP")), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(DefaultMonthlyCalendarActivity.this, "f"+ num, Toast.LENGTH_SHORT).show();
 
         t.setText(rTip.getString(rTip.getColumnIndex("TIP")));
         ClosePopUp=(TextView)myDialog.findViewById(R.id.close);
@@ -336,5 +341,8 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
 }
 
