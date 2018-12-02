@@ -63,16 +63,16 @@ public class AddSchoolTask extends AppCompatActivity implements View.OnClickList
 
         date=getIntent().getStringExtra("EE");
         startDate.setText(date);
-
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        Date date1 = null;
-        try {
-            date1 = (Date) formatter.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if(!(startDate.equals("Start Date"))) {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            Date date1 = null;
+            try {
+                date1 = (Date) formatter.parse(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            sDate = date1.getTime();
         }
-        sDate = date1.getTime();
-
         start_T.setOnClickListener(this);
         start_D.setOnClickListener(this);
         end_T.setOnClickListener(this);

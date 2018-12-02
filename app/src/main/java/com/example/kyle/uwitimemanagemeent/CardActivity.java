@@ -92,7 +92,7 @@ public class CardActivity extends AppCompatActivity {
                 if (v == open) {
                     Card c;
                     if(cards.size()==0) {
-                        Toast.makeText(CardActivity.this, "EMPTY", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CardActivity.this, "NO GENERAL TASKS AVAILABLE", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         c = cards.get(posID);

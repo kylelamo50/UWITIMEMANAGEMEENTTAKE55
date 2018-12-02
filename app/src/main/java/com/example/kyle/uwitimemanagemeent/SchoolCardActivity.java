@@ -108,7 +108,7 @@ public class SchoolCardActivity extends AppCompatActivity {
                 if(v == open) {
                     SchoolCard c;
                     if(cards.size()==0) {
-                        Toast.makeText(SchoolCardActivity.this, "ALL ITEMS DELETED", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SchoolCardActivity.this, "NO SCHOOL TASK AVAILABLE", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         c = cards.get(posID);

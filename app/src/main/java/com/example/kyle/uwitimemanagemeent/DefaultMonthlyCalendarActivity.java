@@ -224,8 +224,9 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
             @Override
             public void onClick(View v) {
                 if(v == add) {
+                    String date="Start Date";
                     i = new Intent(getApplicationContext(), AddTask.class);
-
+                    i.putExtra("Extra", date);
                     startActivity(i);
 
                 } }});
