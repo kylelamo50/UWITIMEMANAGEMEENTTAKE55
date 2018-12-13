@@ -69,7 +69,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setTitle("November - 2018");
+        actionBar.setTitle("Decemeber - 2018");
         myDialog = new Dialog(this);
         myDialog2 = new Dialog(this);
         compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
