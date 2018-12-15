@@ -198,7 +198,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
                     {
                     Toast.makeText(context,  "NO EVENT ADDED", Toast.LENGTH_SHORT).show();
                     Intent i=new Intent (getApplicationContext(),AddTask.class);
-                    i.putExtra("Extra", formattedDate);
+                    i.putExtra("Extra", formattedDate);                             //the date clicked is also forwarded to the next screen so that the start date would be initially set to the date selected(formatted date)
                     startActivity(i);
                 }
 
@@ -212,13 +212,13 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
 
 
 
-        add.setOnClickListener(new View.OnClickListener() {
+        add.setOnClickListener(new View.OnClickListener() {          //add image button selected
             @Override
             public void onClick(View v) {
                 if(v == add) {
                     String date="Start Date";
                     i = new Intent(getApplicationContext(), AddTask.class);
-                    i.putExtra("Extra", date);
+                    i.putExtra("Extra", date);                                    //no start date selected so the startdate edit text field is set to the text "START DATE"
                     startActivity(i);
 
                 } }});
@@ -226,7 +226,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
 
 
 
-    public String getDate(long timeStamp){
+    public String getDate(long timeStamp){                 //convert long date into dd-MM-yyyy format
 
         try{
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -238,7 +238,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
         }
     }
 
-    public String getTime(long timeStamp){
+    public String getTime(long timeStamp){                  //convert long time into HH:mm:ss format
 
         try{
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");

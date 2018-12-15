@@ -27,7 +27,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
     DatabaseHelper myDb;
     TextView title;
     EditText startDate, endDate, startTime, endTime, note;
-    Button btnAddData, btnviewAll, btnDelete, btnviewUpdate;
+    Button btnAddData, btnviewAll;
     Button start_T, start_D, end_T, end_D;
     private int mYear, mMonth, mDay, mHour, mMinute;
     private long sDate, sTime, eDate, eTime;
