@@ -26,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText userName;
     private static final String FILE_NAME = "name.txt";
     private static final String FILE_NAME2 = "faculty.txt";
+
     DatabaseHelper myDb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,25 +38,18 @@ public class RegisterActivity extends AppCompatActivity {
         rg = (RadioGroup) findViewById(R.id.radioGroup);
         userName = (EditText) findViewById(R.id.editText);
         reg.setOnClickListener(new Button_Clicker());
-        session = new UserSessionActivity(getApplicationContext());
+        session = new UserSessionActivity(getApplicationContext());     //user session info so that the register screen isn't access each time the person go on the app
         myDb = new DatabaseHelper(getApplicationContext());
 
-        if (session.readLoginStatus()==false) {
-            preLoadTips();
-          //  Toast.makeText(RegisterActivity.this, "LOADING TIPS", Toast.LENGTH_SHORT).show();
-            Cursor res = myDb.getAllDataTip();
-           // StringBuffer buffer = new StringBuffer();
-           // while (res.moveToNext()) {
-              //  buffer.append("Tip :" + res.getString(1) + "\n");
-            //}
-           // showMessage("Data",buffer.toString());
+        if (session.readLoginStatus()==false) {              //the readLoginStatus is false the first time the user goes on the app or when the user click the back button on the welcome screen
+            preLoadTips();                                  //fill the tip table in the database with 10 tips
+
+
         }
 
 
-        if (session.readLoginStatus()) {
+        if (session.readLoginStatus()) {                     // once the user goes on the app for a second,third,etc time it will forward the user to the welcome screen
             Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
-
-
             startActivity(intent);
             finish();
 
@@ -63,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    void preLoadTips(){
+    void preLoadTips(){                                                            // 10 tips inserted into the tip table of the db
         myDb.insertTipData("Don't drink and drive.Stay in school an party hard");
         myDb.insertTipData("Make sure you’re engaging in activities that support your business goals, both short- and long-term. Everything else is a potential time-waster");
         myDb.insertTipData("Prioritize wisely.Looking at what goes into making up your day, where do your activities fit into these categories?");
@@ -76,19 +70,12 @@ public class RegisterActivity extends AppCompatActivity {
         myDb.insertTipData("Fellas be who u want to be.You are more than a 3.6 gpa");
         return;
     }
-    public void showMessage(String title,String Message){
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(Message);
-        builder.show();
-    }
 
-    public void checkButton(View v) {
+    public void checkButton(View v) {      //show which faculty selected in a toast message
         int r1;
-        r1 = rg.getCheckedRadioButtonId();
-        rb = findViewById(r1);
+        r1 = rg.getCheckedRadioButtonId();  //get the id of the radio button selected within the radio group
+        rb = findViewById(r1);              //uses the id to determine the radio button selected
         Toast.makeText(RegisterActivity.this, rb.getText() + " Selected", Toast.LENGTH_SHORT).show();
 
     }
@@ -102,14 +89,14 @@ public class RegisterActivity extends AppCompatActivity {
         public void onClick(View v) {
 
 
-            if (v == reg) {
+            if (v == reg) {             //register button clicked
 
-                if ((userName.getText().toString().trim().length() > 0) && (rg.getCheckedRadioButtonId() != -1)) {
+                if ((userName.getText().toString().trim().length() > 0) && (rg.getCheckedRadioButtonId() != -1)) {     //validation  check to ensure the user enters a user name and select a faculty
 
                     FileOutputStream fos = null;
                     try {
-                        fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
-                        fos.write(userName.getText().toString().getBytes());
+                        fos = openFileOutput(FILE_NAME, MODE_PRIVATE);               //open name file
+                        fos.write(userName.getText().toString().getBytes());          //send user name entered to the name.txt file
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -131,8 +118,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                             FileOutputStream fos2 = null;
                             try {
-                                fos2 = openFileOutput(FILE_NAME2, MODE_PRIVATE);
-                                fos2.write(b.getBytes());
+                                fos2 = openFileOutput(FILE_NAME2, MODE_PRIVATE);       //open faculty file
+                                fos2.write(b.getBytes());                              //send the faculty type selected to the facult
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             } catch (IOException e) {
@@ -149,9 +136,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
 
-                                startActivity(intent);
-                                session.writeLoginStatus(true);
-                                finish();
+                                startActivity(intent);              //welcome screen opened
+                                session.writeLoginStatus(true);     //writeLoginStatus set to true
+                                finish();                           //register activity is terminated
 
 
 
