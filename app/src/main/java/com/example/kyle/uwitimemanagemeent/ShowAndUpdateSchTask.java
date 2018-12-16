@@ -104,7 +104,7 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
                             Toast.makeText(getApplicationContext(), "Data not Inserted.Please fill all information", Toast.LENGTH_LONG).show();
                         }
                         else {
-                            myDb = new DatabaseHelper(getApplicationContext());
+
                             s = title.getText().toString();
                             l = loc.getText().toString();
                             c = classes.getText().toString();
