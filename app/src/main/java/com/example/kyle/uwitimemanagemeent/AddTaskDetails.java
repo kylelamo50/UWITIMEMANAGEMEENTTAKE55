@@ -31,8 +31,8 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
     Button start_T, start_D, end_T, end_D;
     private int mYear, mMonth, mDay, mHour, mMinute;
     private long sDate, sTime, eDate, eTime;
-    String s = "";
-    String n = "";
+    String s = "";   //title
+    String n = "";   //note
 
     String date="";
 
@@ -56,8 +56,8 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
         btnAddData = (Button) findViewById(R.id.task_save);
         btnviewAll = (Button) findViewById(R.id.all);
 
-        date=getIntent().getStringExtra("EE");
-        startDate.setText(date);
+        date=getIntent().getStringExtra("EE");          //get date that the user selects on the calendar or if the user selects the image button it obtains "Start date"
+        startDate.setText(date);                              //set start date edit text to the date obtained
 
         if(!(startDate.getText().toString().equals("Start Date"))) {
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -70,20 +70,28 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
             sDate = date1.getTime();
         }
 
+
+
+        //check if button or edit text is selected
         start_T.setOnClickListener(this);
         start_D.setOnClickListener(this);
         end_T.setOnClickListener(this);
         end_D.setOnClickListener(this);
+        startDate.setOnClickListener(this);
+        endDate.setOnClickListener(this);
+        startTime.setOnClickListener(this);
+        endTime.setOnClickListener(this);
 
         btnAddData.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //validation check to ensure user enter all the data with the exception of note
                         if (startDate.getText().toString().trim().contains("Start Date") || endDate.getText().toString().contains("End Date") || startTime.getText().toString().contains("Start Time") || endTime.getText().toString().contains("End Time")) {
                             Toast.makeText(getApplicationContext(), "Data not Inserted.Please fill out Date and Time information", Toast.LENGTH_LONG).show();
                         }
                         else{
-                            myDb = new DatabaseHelper(getApplicationContext());
+
                             s = title.getText().toString();
 
                             if (note.getText().toString().trim().length() == 0) {
@@ -93,7 +101,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                                 n = note.getText().toString();
                             }
 
-                            myDb.insertDataGeneralTask(s, sDate, eDate, sTime, eTime, n);
+                            myDb.insertDataGeneralTask(s, sDate, eDate, sTime, eTime, n); // insert into database
 
 
 
@@ -101,7 +109,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
 
 
                             Intent i = new Intent(getApplicationContext(), DefaultMonthlyCalendarActivity.class);
-                            startActivity(i);
+                            startActivity(i);                      //start the calendar activity
 
                         }
 
@@ -115,7 +123,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
 
-        if (v == start_D) {
+        if (v == start_D || v==startDate) {      //if user clicks on the start date button or on the start date edit text
 
             // Get Current Date
             final Calendar c = Calendar.getInstance();
@@ -123,7 +131,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
+            // Launch Date Picker Dialog
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
 
@@ -139,7 +147,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
 
                                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                                 Date date = (Date) formatter.parse(z);
-                                sDate = date.getTime();
+                                sDate = date.getTime();                                                       //get the long value of the start date and set sDate to this value
 
 
                             } catch (ParseException e) {
@@ -151,7 +159,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
         }
-        if (v == end_D) {
+        if (v == end_D || v== endDate) {                  //if user clicks on the end date button or on the end date edit text
 
             // Get Current Date
             final Calendar c = Calendar.getInstance();
@@ -159,7 +167,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
+            // Launch Date Picker Dialog
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
 
@@ -173,7 +181,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                                 String z = endDate.getText().toString();
                                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
                                 Date date = (Date) formatter.parse(z);
-                                eDate = date.getTime();
+                                eDate = date.getTime();                                           //get the long value of the end date and set eDate to this value
 
                             } catch (ParseException e) {
                                 e.printStackTrace();
@@ -184,7 +192,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
         }
-        if (v == start_T) {
+        if (v == start_T || v==startTime) {        //if user clicks on the start time button or on the start time edit text
 
             // Get Current Time
             final Calendar c = Calendar.getInstance();
@@ -199,7 +207,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
                             Time t = Time.valueOf(Integer.toString(hourOfDay) + ":" + Integer.toString(minute) + ":00");
-                            sTime = t.getTime();
+                            sTime = t.getTime();                                                //get the long value of the start time and set sTime to this value
                             if (hourOfDay >= 12) {
                                 startTime.setText(hourOfDay + ":" + minute + " pm");
                             } else {
@@ -209,7 +217,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                     }, mHour, mMinute, false);
             timePickerDialog.show();
         }
-        if (v == end_T) {
+        if (v == end_T || v==endTime) {         //if user clicks on the end time button or on the end time edit text
 
             // Get Current Time
             final Calendar c = Calendar.getInstance();
@@ -224,7 +232,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
                             Time t = Time.valueOf(Integer.toString(hourOfDay) + ":" + Integer.toString(minute) + ":00");
-                            eTime = t.getTime();
+                            eTime = t.getTime();                       //get the long value of the end time and set eTime to this value
                             if (hourOfDay >= 12) {
                                 endTime.setText(hourOfDay + ":" + minute + " pm");
                             } else {
@@ -234,38 +242,6 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                     }, mHour, mMinute, false);
             timePickerDialog.show();
         }
-    }
-
-
-    public String getDate(long timeStamp) {
-
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            Date netDate = (new Date(timeStamp));
-            return sdf.format(netDate);
-        } catch (Exception ex) {
-            return "xx";
-        }
-    }
-
-    public String getTime(long timeStamp) {
-
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            Date netDate = (new Date(timeStamp));
-            return sdf.format(netDate);
-        } catch (Exception ex) {
-            return "xx";
-        }
-    }
-
-    public void showMessage(String title, String Message) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(Message);
-        builder.show();
     }
 
 
