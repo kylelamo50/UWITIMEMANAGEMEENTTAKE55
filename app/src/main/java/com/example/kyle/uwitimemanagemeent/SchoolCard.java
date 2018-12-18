@@ -1,6 +1,6 @@
 package com.example.kyle.uwitimemanagemeent;
 
-public class SchoolCard {
+public class SchoolCard {   //school data to be shown in the navigation bar
     String Title;
     String Startd;
     int photoId;
