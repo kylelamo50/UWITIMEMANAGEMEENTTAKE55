@@ -29,7 +29,8 @@
         <activity android:name=".ShowAndUpdateGenTask" />
         <activity android:name=".SchoolCard" />
         <activity android:name=".SchoolCardActivity" />
-        <activity android:name=".ShowAndUpdateSchTask"></activity>
+        <activity android:name=".ShowAndUpdateSchTask" />
+        <activity android:name=".ElearningWebView"></activity>
     </application>
 
 </manifest>

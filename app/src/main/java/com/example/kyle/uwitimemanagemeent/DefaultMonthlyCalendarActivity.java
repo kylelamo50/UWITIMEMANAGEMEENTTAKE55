@@ -328,6 +328,9 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
 
             Intent i2 = new Intent(getApplicationContext(), SchoolCardActivity.class);
             startActivity(i2);
+        }else if (id == R.id.nav_elearning) {
+            Intent i = new Intent(getApplicationContext(), ElearningWebView.class);
+            startActivity(i);
         }
 
         drawer.closeDrawer(GravityCompat.START);
