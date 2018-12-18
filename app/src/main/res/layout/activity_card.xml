@@ -16,7 +16,7 @@
         android:layout_width="71dp"
         android:layout_height="52dp"
         android:layout_marginTop="8dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@android:color/holo_red_light"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
