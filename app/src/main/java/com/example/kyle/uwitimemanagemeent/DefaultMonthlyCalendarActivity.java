@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.content.Intent;
@@ -255,6 +256,8 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
         TextView ClosePopUp;
         TextView t;
 
+        Button nextTip;
+
         Cursor r=myDb.getAllDataTip();
         int countTip=0;
         while (r.moveToNext()){           //iterate through each in the tip table to get the number of tips
@@ -265,6 +268,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
         int num=rand.nextInt(countTip-1 + 1) + 1;        //gets a random number between 0-11
         myDialog.setContentView(R.layout.popup_xml);
         t=(TextView) myDialog.findViewById(R.id.data);
+
 
         Cursor rTip=myDb.getTipDataBasedOnId(num);             //get a tip based on the random number generated
         rTip.moveToFirst();
@@ -277,7 +281,36 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
             public void onClick(View v) {
                 myDialog.dismiss();                                 // the pop up closes
             }
+
+
         });
+
+          nextTip=(Button) myDialog.findViewById(R.id.button55);                          //next tip button on pop up to go to next tip
+          nextTip.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  TextView t;
+
+                  Cursor r=myDb.getAllDataTip();                        //get all tips
+                  int countTip=0;
+                  while (r.moveToNext()){           //iterate through each in the tip table to get the number of tips
+                      countTip++;
+                  }
+
+                  Random rand=new Random();
+                  int num=rand.nextInt(countTip-1 + 1) + 1;        //gets a random number between 0-11
+
+                  t=(TextView) myDialog.findViewById(R.id.data);
+
+
+                  Cursor rTip=myDb.getTipDataBasedOnId(num);             //get a tip based on the random number generated
+                  rTip.moveToFirst();
+
+
+                  t.setText(rTip.getString(rTip.getColumnIndex("TIP")));
+              }
+
+          });
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
 
