@@ -116,7 +116,7 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
                                 n = note.getText().toString();
                             }
 
-                             myDb.insertDataSchoolTask(s, sDate, eDate, sTime, eTime, l, c, n);  //insert data into the school table
+                             myDb.updateDataSchool(id,s, sDate, eDate, sTime, eTime, l, c, n);  //insert data into the school table
 
 
                             Toast.makeText(getApplicationContext(), "Data Inserted", Toast.LENGTH_LONG).show();

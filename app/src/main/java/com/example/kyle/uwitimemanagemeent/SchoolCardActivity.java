@@ -26,7 +26,7 @@ public class SchoolCardActivity extends AppCompatActivity {
     private RecyclerView rv;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager lm;
-   // SchoolDataBaseHelper myDb2;
+
     DatabaseHelper myDb;
     ArrayList<SchoolCard> cards;
     private static String LOG_TAG = "SchoolCardViewActivity";
@@ -52,33 +52,22 @@ public class SchoolCardActivity extends AppCompatActivity {
 
 
         Cursor res = myDb.getAllDataSchool();
-        if(res.getCount() == 0) {
-            // show message
+        if(res.getCount() == 0) {             //database empty
+
             Toast.makeText(getApplicationContext(),"Empty!",Toast.LENGTH_LONG).show();
-           // Intent i=new Intent(getApplicationContext(),AddTask.class);
-           // startActivity(i);
+
         }
 
-        String b="";
-        try{
-            FileInputStream i1= openFileInput("faculty.txt");
-            int size1=i1.available();
-            byte[] buffer1= new  byte[size1];
-            i1.read(buffer1);
-            i1.close();
-            b=new  String(buffer1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         FacultyPicked f=new FacultyPicked(getApplicationContext());
-        int a=f.getIcon();
+        int a=f.getIcon();                                         //get icon of faculty selected
 
         cards = new ArrayList<SchoolCard>();
-        while (res.moveToNext()) {
+        while (res.moveToNext()) {        //move through each school task adding it to the card arraylist
             cards.add(new SchoolCard(res.getString(0),res.getString(1),getDate(res.getLong(2)),a));
 
         }
-        //cards.add(new SchoolCard(null," "," ",0));
+
         rv = (RecyclerView) findViewById(R.id.my_recycler_view);
         rv.setHasFixedSize(true);
         lm = new LinearLayoutManager(this);
@@ -91,11 +80,11 @@ public class SchoolCardActivity extends AppCompatActivity {
                 SchoolCard c;
                 if(cards.size()>0) {
                     c = cards.get(posID);
-                    //  Toast.makeText(getApplicationContext(), "ccc" + cards.size() + "ggg " + posID, Toast.LENGTH_LONG).show();
-                    boolean a = myDb.deleteItemSchool(c.getId());
-                    //  Toast.makeText(getApplicationContext(), "ccc" + a, Toast.LENGTH_LONG).show();
 
-                    cards.remove(posID);
+                    boolean a = myDb.deleteItemSchool(c.getId());           //delete item from database using the id
+
+
+                    cards.remove(posID);                                //remove card
 
                     mAdapter.notifyItemRemoved(posID);
                 }
@@ -112,11 +101,11 @@ public class SchoolCardActivity extends AppCompatActivity {
                     }
                     else {
                         c = cards.get(posID);
-                        int id = c.getId();
+                        int id = c.getId();                         //get id of school task
                         String pos = Integer.toString(id);
                         Intent i = new Intent(getApplicationContext(), ShowAndUpdateSchTask.class);
                         i.putExtra("R", pos);
-                        startActivity(i);
+                        startActivity(i);                  //open activity to show individual school task
                     }
 
 
@@ -146,7 +135,7 @@ public class SchoolCardActivity extends AppCompatActivity {
                 posID = position;
                 delete.setVisibility(View.VISIBLE);
                 open.setVisibility(View.VISIBLE);
-                Snackbar.make(findViewById(R.id.my_recycler_view) , Integer.toString(position+1)+") "+cards.get(position).Title+" selected", Snackbar.LENGTH_LONG)
+                Snackbar.make(findViewById(R.id.my_recycler_view) , Integer.toString(position+1)+") "+cards.get(position).Title+" selected", Snackbar.LENGTH_LONG)          //when card selected it display the position of the card item in the list
                         .setAction("Action", null)
                         .setDuration(250)
                         .show();
@@ -156,18 +145,6 @@ public class SchoolCardActivity extends AppCompatActivity {
     }
 
 
-
-    public String getTime(long timeStamp){
-
-        try{
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            Date netDate = (new Date(timeStamp));
-            return sdf.format(netDate);
-        }
-        catch(Exception ex){
-            return "xx";
-        }
-    }
 
 
     public String getDate(long timeStamp){

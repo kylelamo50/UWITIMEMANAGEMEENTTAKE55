@@ -27,7 +27,7 @@ public class AddSchoolTask extends AppCompatActivity implements View.OnClickList
     DatabaseHelper myDb;
     TextView title;
     EditText startDate,endDate,startTime,endTime,note,loc,classes;
-    Button btnAddData,btnviewAll,btnDelete,btnviewUpdate;
+    Button btnAddData;
     Button start_T,start_D,end_T,end_D;
     private int mYear, mMonth, mDay, mHour, mMinute;
     private long sDate,sTime,eDate,eTime;
@@ -82,6 +82,7 @@ public class AddSchoolTask extends AppCompatActivity implements View.OnClickList
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //validation checks
                         if (startDate.getText().toString().trim().contains("Start Date") || endDate.getText().toString().contains("End Date") || startTime.getText().toString().contains("Start Time") || endTime.getText().toString().contains("End Time") || loc.getText().toString().trim().length() == 0 || classes.getText().toString().trim().length() == 0) {
                             Toast.makeText(getApplicationContext(), "Data not Inserted.Please fill all information", Toast.LENGTH_LONG).show();
                         }
@@ -98,7 +99,7 @@ public class AddSchoolTask extends AppCompatActivity implements View.OnClickList
                                 n = note.getText().toString();
                             }
 
-                            boolean isInserted = myDb.insertDataSchoolTask(s, sDate, eDate, sTime, eTime, l, c, n);
+                            myDb.insertDataSchoolTask(s, sDate, eDate, sTime, eTime, l, c, n);   //insert into database
 
 
                             Toast.makeText(getApplicationContext(), "Data Inserted", Toast.LENGTH_LONG).show();
@@ -112,9 +113,6 @@ public class AddSchoolTask extends AppCompatActivity implements View.OnClickList
         );
 
 
-
-//
-
     }
     @Override
     public void onClick(View v) {
@@ -127,7 +125,7 @@ public class AddSchoolTask extends AppCompatActivity implements View.OnClickList
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
+            // Launch Date Picker Dialog
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
 
@@ -165,7 +163,7 @@ public class AddSchoolTask extends AppCompatActivity implements View.OnClickList
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
+            // Launch Date Picker Dialog
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
 
@@ -245,37 +243,5 @@ public class AddSchoolTask extends AppCompatActivity implements View.OnClickList
     }
 
 
-    public String getDate(long timeStamp){
 
-        try{
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
-            Date netDate = (new Date(timeStamp));
-            return sdf.format(netDate);
-        }
-        catch(Exception ex){
-            return "xx";
-        }
-    }
-
-    public String getTime(long timeStamp){
-
-        try{
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-            Date netDate = (new Date(timeStamp));
-            return sdf.format(netDate);
-        }
-        catch(Exception ex){
-            return "xx";
-        }
-    }
-    public void showMessage(String title,String Message){
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(Message);
-        builder.show();
-    }
-//    public void DeleteData() {
-//        btnDelete.setOnClickListener(
 }

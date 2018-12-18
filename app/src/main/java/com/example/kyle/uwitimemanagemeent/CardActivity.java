@@ -1,3 +1,5 @@
+//relatively the same documentation as SchoolCardActivity
+//this card activity is for angeneral task
 package com.example.kyle.uwitimemanagemeent;
 
 import android.annotation.SuppressLint;
@@ -45,10 +47,9 @@ public class CardActivity extends AppCompatActivity {
         actionBar.hide();
         Cursor res = myDb.getAllDataGeneral();
         if (res.getCount() == 0) {
-            // show message
+
             Toast.makeText(getApplicationContext(), " Empty!", Toast.LENGTH_LONG).show();
-            // Intent i = new Intent(getApplicationContext(), AddTask.class);
-            //startActivity(i);
+
         }
 
 
@@ -139,16 +140,7 @@ public class CardActivity extends AppCompatActivity {
         }
 
 
-        public String getTime ( long timeStamp){
 
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-                Date netDate = (new Date(timeStamp));
-                return sdf.format(netDate);
-            } catch (Exception ex) {
-                return "xx";
-            }
-        }
 
 
         public String getDate ( long timeStamp){
@@ -164,26 +156,6 @@ public class CardActivity extends AppCompatActivity {
 
 
 
-/*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
-
-        if (id == R.id.action_home) {
-            Intent intent = new Intent(this, DefaultMonthlyCalendarActivity.class);
-            startActivity(intent);
-            this.finish();
-        }
-        if (id == R.id.action_back) {
-           // onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-}
-
-
-*/
 
 }

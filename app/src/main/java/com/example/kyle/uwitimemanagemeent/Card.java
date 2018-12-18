@@ -1,6 +1,6 @@
 package com.example.kyle.uwitimemanagemeent;
 
-public class Card {
+public class Card {    //general task details to be displayed
     String Title;
     String Startd;
     int photoId;
@@ -17,7 +17,7 @@ public class Card {
 
     }
 
-    public int getId(){
+    public int getId(){           //get id of task
         if (ID != null) {
             int i = Integer.parseInt(ID);
             return i;
