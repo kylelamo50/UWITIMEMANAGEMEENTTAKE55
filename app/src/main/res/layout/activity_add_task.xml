@@ -37,7 +37,7 @@
         android:id="@+id/gym_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@android:color/holo_orange_light"
         android:text="Gym"
         app:layout_constraintBottom_toTopOf="@+id/party_btn"
         app:layout_constraintStart_toStartOf="@+id/school_btn"
