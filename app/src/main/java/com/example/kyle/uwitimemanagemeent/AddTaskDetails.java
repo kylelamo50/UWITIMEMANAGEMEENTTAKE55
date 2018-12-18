@@ -217,7 +217,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                     }, mHour, mMinute, false);
             timePickerDialog.show();
         }
-        if (v == end_T || v==endTime) {         //if user clicks on the end time button or on the end time edit text
+        if (v == end_T || v==endTime) {         ////if user clicks on the end time button or on the end time edit text
 
             // Get Current Time
             final Calendar c = Calendar.getInstance();
