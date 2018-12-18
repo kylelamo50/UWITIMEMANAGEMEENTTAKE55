@@ -91,7 +91,7 @@ public class AddTaskDetails extends AppCompatActivity implements View.OnClickLis
                             Toast.makeText(getApplicationContext(), "Data not Inserted.Please fill out Date and Time information", Toast.LENGTH_LONG).show();
                         }
                         else{
-
+                            myDb = new DatabaseHelper(getApplicationContext());
                             s = title.getText().toString();
 
                             if (note.getText().toString().trim().length() == 0) {
