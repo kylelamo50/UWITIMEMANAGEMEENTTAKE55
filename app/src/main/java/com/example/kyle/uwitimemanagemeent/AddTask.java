@@ -27,15 +27,15 @@ public class AddTask extends AppCompatActivity {
         gym = findViewById(R.id.gym_btn);
         party = findViewById(R.id.party_btn);
         general = findViewById(R.id.general_btn);
-        date=getIntent().getStringExtra("Extra");
-       // Toast.makeText(getApplicationContext(),  "ooo"+date, Toast.LENGTH_SHORT).show();
+        date=getIntent().getStringExtra("Extra");         //obtain date from the DefaultMonthlyCalendar screen.This date can contain a date selected on the calendar to be used as the start date or the text "Start date"
+
         i = new Intent(this,AddTaskDetails.class);
         i2= new Intent(this,AddSchoolTask.class);
 
         school.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 i2.putExtra("EE", date);
-                      startActivity(i2);
+                      startActivity(i2);                    //once school button is selected then the user is forwarded to the AddSchoolTask screen
             }
         });
         gym.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +51,7 @@ public class AddTask extends AppCompatActivity {
         general.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 i.putExtra("EE", date);
-                startActivity(i);
+                startActivity(i);                                       //once school button is selected then the user is forwarded to the Add General Task screen
             }
         });
     }

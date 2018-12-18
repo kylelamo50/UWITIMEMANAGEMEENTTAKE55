@@ -42,7 +42,6 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
     String s = "";
     Intent i;
     DatabaseHelper myDb;
-    //SchoolDataBaseHelper myDb2;
     CompactCalendarView compactCalendar;
     int count=0;
     int count2=0;
@@ -77,28 +76,20 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
         add = (ImageButton) findViewById(R.id.add_task_button);
 
         myDb = new DatabaseHelper(getApplicationContext());
-       // myDb.getAllData();
-        //myDb2 = new SchoolDataBaseHelper(getApplicationContext());
-       // myDb2.getAllData();
-       // myDb.deleteData("1");
-        //myDb2.deleteData("2");
 
-     //  final ActionBar actionBar = getSupportActionBar();
-     //  actionBar.setDisplayHomeAsUpEnabled(false);
-      // actionBar.setTitle("November - 2018");
 
         Cursor res = myDb.getAllDataGeneral();
         Cursor res2 = myDb.getAllDataSchool();
-       // random();
 
-        ev1=new ArrayList<>();
-        ev2=new ArrayList<>();
-        compareStartDate1=new ArrayList<>();
-        compareStartDate2=new ArrayList<>();
+
+        ev1=new ArrayList<>();                              //would contain all the general tasks
+        ev2=new ArrayList<>();                               //would contain all the school tasks
+        compareStartDate1=new ArrayList<>();                  //would contain all the start dates of the general task used solely for comparing the start date of a general task to a date selected on the calendar
+        compareStartDate2=new ArrayList<>();                  //would contain all the start dates of the school task used solely for comparing the start date of a school task to a date selected on the calendar
         String buffer = " ";
         String buffer2 = " ";
-        //int id=1;
-        while (res.moveToNext()) {
+
+        while (res.moveToNext()) {                              //iterate through each general task created
 
             buffer+=("Id :"+ res.getString(0)+"\n");
             buffer+=("Title :"+ res.getString(1)+"\n");
@@ -108,15 +99,15 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
             buffer+=("End Time: "+ getTime(res.getLong(5))+"\n");
             buffer+=("Note: "+ res.getString(6)+"\n\n");
 
-            ev1.add(new Event(Color.RED, res.getLong(2), buffer));
-            compareStartDate1.add(new Event(Color.TRANSPARENT, res.getLong(2),getDate(res.getLong(2))));
+            ev1.add(new Event(Color.RED, res.getLong(2), buffer));             //create an event of a red colour, would be stored on the calendar on the start date of general task and would show all the details of the general task(buffer).This event is then added to ev1 arraylist
+            compareStartDate1.add(new Event(Color.TRANSPARENT, res.getLong(2),getDate(res.getLong(2)))); //create an event of no colour,stored in the start date and contains the start date in string format.Adds the event to the arraylist
 
-            compactCalendar.addEvent(ev1.get(count));
+            compactCalendar.addEvent(ev1.get(count));         //add each event(ev1) to the calendar on the start date of the general task
             count++;
             buffer= " ";
         }
 
-        while (res2.moveToNext()) {
+        while (res2.moveToNext()) {                                                          //iterate through each school task created
 
             buffer2+=("Id :"+ res2.getString(0)+"\n");
             buffer2+=("Title :"+ res2.getString(1)+"\n");
@@ -129,8 +120,8 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
             buffer2+=("Note: "+ res2.getString(8)+"\n\n");
 
             ev2.add(new Event(Color.BLUE, res2.getLong(2), buffer2));
-            compareStartDate2.add(new Event(Color.TRANSPARENT, res2.getLong(2),getDate(res2.getLong(2))));
-            compactCalendar.addEvent(ev2.get(count2));
+            compareStartDate2.add(new Event(Color.TRANSPARENT, res2.getLong(2),getDate(res2.getLong(2))));            //create an event of a blue colour, would be stored on the calendar on the start date of school task and would show all the details of the school task(buffer).This event is then added to ev2 arraylist
+            compactCalendar.addEvent(ev2.get(count2));                                                                                       //add each event(ev2) to the calendar on the start date of school task
             count2++;
             buffer2= " ";
         }
@@ -138,7 +129,8 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
         compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
 
             @Override
-            public void onDayClick(Date dateClicked) {
+            public void onDayClick(Date dateClicked) {  //default date of the compact calendar  is of the form EEE MMM dd HH:mm:ss Z yyyy
+                                                        //but this form is simple enough for the user to understand so it need to be converted into a simpler format
                 Context context = getApplicationContext();
                 DateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
                 Date date = null;
@@ -151,18 +143,18 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
 
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date);
-                formattedDate = cal.get(Calendar.DATE) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" +cal.get(Calendar.YEAR);
-                Toast.makeText(context,  formattedDate, Toast.LENGTH_SHORT).show();
+                formattedDate = cal.get(Calendar.DATE) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" +cal.get(Calendar.YEAR);      //convert the "EEE MMM dd HH:mm:ss Z yyyy" format of the calendar to the form "day-month-year"
+                Toast.makeText(context,  formattedDate, Toast.LENGTH_SHORT).show();                                                //display date selected on the calendar
 
                 String display=" ";
                 boolean isEvent=false;
                 int k=0;
                 String DataInPopUp=" ";
-                while(k<count){
-                    display=ev1.get(k).getData().toString();
+                while(k<count){                                    // while k is less than the number of elements in the ev1 arraylist(general tasks)
+                    display=ev1.get(k).getData().toString();      //all the details of a general task stored in display
 
-                    if(compareStartDate1.get(k).getData().toString().contains(formattedDate) ){
-                        DataInPopUp+=display;
+                    if(compareStartDate1.get(k).getData().toString().contains(formattedDate) ){         //if one of the start dates in the arraylist is equal to a date selected on the calendar
+                        DataInPopUp+=display;                                                           //it would add it to a string DataInPopUp, to be added to a pop up
                         isEvent=true;
                     }
 
@@ -174,7 +166,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
                 boolean isEvent2=false;
                 int k2=0;
                 String DataInPopUp2=" ";
-                while(k2<count2){
+                while(k2<count2){                                            // while k2 is less than the number of elements in the ev2 arraylist(school tasks)
                     display2=ev2.get(k2).getData().toString();
 
                     if(compareStartDate2.get(k2).getData().toString().contains(formattedDate)){
@@ -186,12 +178,12 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
                 }
 
 
-                if (isEvent==true || isEvent2==true){
+                if (isEvent==true || isEvent2==true){                            // if a date selected contains a task
                     myDialog2.setContentView(R.layout.task_pop_up);
                     TextView dataInTask;
                     TextView ClosePopUp2;
                     dataInTask=(TextView) myDialog2.findViewById(R.id.data2);
-                    dataInTask.setText(DataInPopUp +"\n" + DataInPopUp2);
+                    dataInTask.setText(DataInPopUp +"\n" + DataInPopUp2);         //details of the task is added to the pop-up
                     ClosePopUp2=(TextView)myDialog2.findViewById(R.id.close2);
                     ClosePopUp2.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -200,13 +192,13 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
                         }
                     });
                     myDialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    myDialog2.show();
+                    myDialog2.show();             //pop-up displayed
                 }
-                else
+                else                              //if the date selected doesnt contain a task then it goes to add task screen
                     {
                     Toast.makeText(context,  "NO EVENT ADDED", Toast.LENGTH_SHORT).show();
                     Intent i=new Intent (getApplicationContext(),AddTask.class);
-                    i.putExtra("Extra", formattedDate);
+                    i.putExtra("Extra", formattedDate);                             //the date clicked is also forwarded to the next screen so that the start date would be initially set to the date selected(formatted date)
                     startActivity(i);
                 }
 
@@ -220,13 +212,13 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
 
 
 
-        add.setOnClickListener(new View.OnClickListener() {
+        add.setOnClickListener(new View.OnClickListener() {          //add image button selected
             @Override
             public void onClick(View v) {
                 if(v == add) {
                     String date="Start Date";
                     i = new Intent(getApplicationContext(), AddTask.class);
-                    i.putExtra("Extra", date);
+                    i.putExtra("Extra", date);                                    //no start date selected so the startdate edit text field is set to the text "START DATE"
                     startActivity(i);
 
                 } }});
@@ -234,7 +226,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
 
 
 
-    public String getDate(long timeStamp){
+    public String getDate(long timeStamp){                 //convert long date into dd-MM-yyyy format
 
         try{
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -246,7 +238,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
         }
     }
 
-    public String getTime(long timeStamp){
+    public String getTime(long timeStamp){                  //convert long time into HH:mm:ss format
 
         try{
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -258,32 +250,32 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
         }
     }
 
-      public void showPopUp(View v){
-   // public void random(){
+      public void showPopUp(View v){              //display tips in pop up
+
         TextView ClosePopUp;
         TextView t;
 
         Cursor r=myDb.getAllDataTip();
         int countTip=0;
-        while (r.moveToNext()){
+        while (r.moveToNext()){           //iterate through each in the tip table to get the number of tips
             countTip++;
         }
-       //   Toast.makeText(DefaultMonthlyCalendarActivity.this, "f"+ countTip, Toast.LENGTH_SHORT).show();
+
         Random rand=new Random();
-        int num=rand.nextInt(countTip-1 + 1) + 1;
+        int num=rand.nextInt(countTip-1 + 1) + 1;        //gets a random number between 0-11
         myDialog.setContentView(R.layout.popup_xml);
         t=(TextView) myDialog.findViewById(R.id.data);
 
-        Cursor rTip=myDb.getTipDataBasedOnId(num);
+        Cursor rTip=myDb.getTipDataBasedOnId(num);             //get a tip based on the random number generated
         rTip.moveToFirst();
-       // Toast.makeText(DefaultMonthlyCalendarActivity.this, "f"+ num, Toast.LENGTH_SHORT).show();
 
-        t.setText(rTip.getString(rTip.getColumnIndex("TIP")));
+
+        t.setText(rTip.getString(rTip.getColumnIndex("TIP")));         //set text on the pop up to a tip
         ClosePopUp=(TextView)myDialog.findViewById(R.id.close);
-        ClosePopUp.setOnClickListener(new View.OnClickListener() {
+        ClosePopUp.setOnClickListener(new View.OnClickListener() {   //if the "X" on the pop up is clicked
             @Override
             public void onClick(View v) {
-                myDialog.dismiss();
+                myDialog.dismiss();                                 // the pop up closes
             }
         });
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -333,8 +325,7 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
             Intent i = new Intent(getApplicationContext(), CardActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_school) {
-            //Snackbar.make(findViewById(R.id.drawer_layout) , "Replace with your own action", Snackbar.LENGTH_LONG)
-                   // .setAction("Action", null).show();
+
             Intent i2 = new Intent(getApplicationContext(), SchoolCardActivity.class);
             startActivity(i2);
         }

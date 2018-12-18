@@ -32,7 +32,7 @@ public class ShowAndUpdateGenTask extends AppCompatActivity implements View.OnCl
     DatabaseHelper myDb;
     TextView title;
     EditText startDate, endDate, startTime, endTime, note;
-    Button SaveandUpdate, btnviewAll, btnDelete, btnviewUpdate;
+    Button SaveandUpdate;
     Button start_T, start_D, end_T, end_D;
     private int mYear, mMonth, mDay, mHour, mMinute;
     private long sDate, sTime, eDate, eTime;
@@ -60,7 +60,7 @@ public class ShowAndUpdateGenTask extends AppCompatActivity implements View.OnCl
         myDb=new DatabaseHelper(getApplicationContext());
         String posID=getIntent().getStringExtra("E");
         id=Integer.parseInt(posID);
-      //  Toast.makeText(getApplicationContext(), " ccc"+i, Toast.LENGTH_LONG).show();
+
 
         Cursor rGeneral=myDb.getGeneralDataBasedOnId(id);
         rGeneral.moveToFirst();
@@ -91,7 +91,7 @@ public class ShowAndUpdateGenTask extends AppCompatActivity implements View.OnCl
                             Toast.makeText(getApplicationContext(), "Data not Inserted.Please fill out Date and Time information", Toast.LENGTH_LONG).show();
                         }
                         else{
-                            //myDb = new DatabaseHelper(getApplicationContext());
+
                             s = title.getText().toString();
 
                             if (note.getText().toString().trim().length() == 0) {

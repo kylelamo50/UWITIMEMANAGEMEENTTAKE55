@@ -33,10 +33,10 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
     Button start_T,start_D,end_T,end_D;
     private int mYear, mMonth, mDay, mHour, mMinute;
     private long sDate,sTime,eDate,eTime;
-    String s = "";
-    String l=" ";
-    String c=" ";
-    String n = "";
+    String s = "";           //school title
+    String l=" ";             //location
+    String c=" ";            //class
+    String n = "";          //note
     String date = "";
     int id;
     @Override
@@ -63,20 +63,24 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
 
         myDb=new DatabaseHelper(getApplicationContext());
         String posID=getIntent().getStringExtra("R");
-        id=Integer.parseInt(posID);
+        id=Integer.parseInt(posID);                               //id of the school item you want to update
 
 
-        Cursor rGeneral=myDb.getSchoolDataBasedOnId(id);
+        Cursor rGeneral=myDb.getSchoolDataBasedOnId(id);         //find the school task in the database using the id
         rGeneral.moveToFirst();
-        //if already exist
-        sDate=rGeneral.getLong(rGeneral.getColumnIndex("STARTDATE"));
-        eDate=rGeneral.getLong(rGeneral.getColumnIndex("ENDDATE"));
-        sTime=rGeneral.getLong(rGeneral.getColumnIndex("STARTTIME"));
-        eTime=rGeneral.getLong(rGeneral.getColumnIndex("ENDTIME"));
-        l=rGeneral.getString(rGeneral.getColumnIndex("LOCATION"));
-        c=rGeneral.getString(rGeneral.getColumnIndex("CLASS"));
-        n=rGeneral.getString(rGeneral.getColumnIndex("NOTE"));
 
+        sDate=rGeneral.getLong(rGeneral.getColumnIndex("STARTDATE"));  //set startDate to the long startDate type retrieved from database
+        eDate=rGeneral.getLong(rGeneral.getColumnIndex("ENDDATE"));    //set endDate to the long endDate type retrieved from database
+        sTime=rGeneral.getLong(rGeneral.getColumnIndex("STARTTIME"));   //set startTime to the long startTime type retrieved from database
+        eTime=rGeneral.getLong(rGeneral.getColumnIndex("ENDTIME"));     //set endTime to the long end time type retrieved from database
+        l=rGeneral.getString(rGeneral.getColumnIndex("LOCATION"));      //set location to the location retrieved from database
+        c=rGeneral.getString(rGeneral.getColumnIndex("CLASS"));          //set class to the class retrieved from database
+        n=rGeneral.getString(rGeneral.getColumnIndex("NOTE"));            //set note to the note retrieved from database
+
+
+
+        //the following set all the edit text to the respective data retrieved from the database so the user can see all the previous data they had
+        //entered for that task and can then proceed to change whichever data they want
         startDate.setText(getDate(rGeneral.getLong(rGeneral.getColumnIndex("STARTDATE"))));
         endDate.setText(getDate(rGeneral.getLong(rGeneral.getColumnIndex("ENDDATE"))));
         startTime.setText(getTime(rGeneral.getLong(rGeneral.getColumnIndex("STARTTIME"))));
@@ -84,6 +88,7 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
         loc.setText(getTime(rGeneral.getLong(rGeneral.getColumnIndex("LOCATION"))));
         classes.setText(getTime(rGeneral.getLong(rGeneral.getColumnIndex("CLASS"))));
         note.setText(rGeneral.getString(rGeneral.getColumnIndex("NOTE")));
+        //end
 
         start_T.setOnClickListener(this);
         start_D.setOnClickListener(this);
@@ -94,30 +99,31 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //validation check to ensure all the data is entered excluding "NOTE"
                         if (startDate.getText().toString().trim().contains("Start Date") || endDate.getText().toString().contains("End Date") || startTime.getText().toString().contains("Start Time") || endTime.getText().toString().contains("End Time") || loc.getText().toString().trim().length() == 0 || classes.getText().toString().trim().length() == 0) {
                             Toast.makeText(getApplicationContext(), "Data not Inserted.Please fill all information", Toast.LENGTH_LONG).show();
                         }
                         else {
-                            myDb = new DatabaseHelper(getApplicationContext());
+
                             s = title.getText().toString();
                             l = loc.getText().toString();
                             c = classes.getText().toString();
 
-                            if (note.getText().toString().trim().length() == 0) {
+                            if (note.getText().toString().trim().length() == 0) {   //if no note added
                                 note.setText("No notes added.");
                                 n = note.getText().toString();
                             } else {
                                 n = note.getText().toString();
                             }
 
-                            boolean isInserted = myDb.insertDataSchoolTask(s, sDate, eDate, sTime, eTime, l, c, n);
+                             myDb.insertDataSchoolTask(s, sDate, eDate, sTime, eTime, l, c, n);  //insert data into the school table
 
 
                             Toast.makeText(getApplicationContext(), "Data Inserted", Toast.LENGTH_LONG).show();
 
 
                             Intent i = new Intent(getApplicationContext(), DefaultMonthlyCalendarActivity.class);
-                            startActivity(i);
+                            startActivity(i);     //jump to the calendar screen to show updated task
                         }
                     }
                 }
@@ -128,7 +134,7 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
 
-        if (v == start_D) {
+        if (v == start_D) {              //once the start date button is clicked then a calendar pops up to select a start date
 
             // Get Current Date
             final Calendar c = Calendar.getInstance();
@@ -136,7 +142,7 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
+            // Launch Date Picker Dialog
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
 
@@ -166,7 +172,7 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
         }
-        if (v == end_D) {
+        if (v == end_D) {             //once the end date button is clicked then a calendar pops up to select a end date
 
             // Get Current Date
             final Calendar c = Calendar.getInstance();
@@ -174,7 +180,7 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
+            // Launch Date Picker Dialog
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
 
@@ -199,7 +205,7 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
         }
-        if (v == start_T ) {
+        if (v == start_T ) { //once the start time button is clicked then a clock pops up to select a start time
 
             // Get Current Time
             final Calendar c = Calendar.getInstance();
@@ -225,7 +231,7 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
                     }, mHour, mMinute, false);
             timePickerDialog.show();
         }
-        if (v == end_T ) {
+        if (v == end_T ) { //once the endtime  button is clicked then a calendar pops up to select a end time
 
             // Get Current Time
             final Calendar c = Calendar.getInstance();
@@ -254,7 +260,7 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
     }
 
 
-    public String getDate(long timeStamp){
+    public String getDate(long timeStamp){          //convert long date to string
 
         try{
             SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
@@ -266,7 +272,7 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
         }
     }
 
-    public String getTime(long timeStamp){
+    public String getTime(long timeStamp){    // convert long time to string
 
         try{
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -277,14 +283,5 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
             return "xx";
         }
     }
-    public void showMessage(String title,String Message){
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(Message);
-        builder.show();
-    }
-//    public void DeleteData() {
-//        btnDelete.setOnClickListener(
 }

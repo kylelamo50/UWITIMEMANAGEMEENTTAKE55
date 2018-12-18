@@ -14,23 +14,23 @@ public class FacultyPicked {
         this.c = context;
     }
 
-    public int getIcon() {
+    public int getIcon() {                                //returns id of the faculty icon of the faculty selected by the user
         int i=0;
         String b = "";
         try {
-            FileInputStream i1 = c.openFileInput("faculty.txt");
+            FileInputStream i1 = c.openFileInput("faculty.txt");            //open the faculty file
             int size1 = i1.available();
             byte[] buffer1 = new byte[size1];
             i1.read(buffer1);
             i1.close();
-            b = new String(buffer1);
+            b = new String(buffer1);           //b set to the text in the file
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
-        if(b.equals("Faculty of Engineering")){
-            i=R.drawable.engine;
+        if(b.equals("Faculty of Engineering")){                   //comparing b(faculty in the file) to the Faculty of Engineering.This is repeated for the other faculties
+            i=R.drawable.engine;                                  //id of the engneering icon in the drawable file
         }
         if(b.equals("Faculty of Food and Agriculture")){
             i=R.drawable.food;
