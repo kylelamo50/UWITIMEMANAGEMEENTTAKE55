@@ -12,60 +12,68 @@
 
     <ImageButton
         android:id="@+id/delete_button"
-        android:layout_width="0dp"
-        android:layout_height="65dp"
-        android:layout_marginBottom="4dp"
-        android:background="@color/colorAccent"
+        android:layout_width="71dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimaryDark"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/pinkHome"
-        app:layout_constraintTop_toBottomOf="@+id/pinkHome"
-        app:layout_constraintVertical_bias="0.955"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_delete_black_24dp" />
 
     <Button
         android:id="@+id/open_button"
-        android:layout_width="253dp"
-        android:layout_height="65dp"
+        android:layout_width="240dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="64dp"
-        android:background="@color/green"
+        android:background="@color/darkgreen"
         android:text="Open"
         android:textColor="@android:color/background_light"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/delete_button"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.89"
+        app:layout_constraintStart_toStartOf="@+id/pinkHome"
+        app:layout_constraintTop_toBottomOf="@+id/my_recycler_view"
+        app:layout_constraintVertical_bias="1.0" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="54dp"
+        android:layout_width="394dp"
+        android:layout_height="448dp"
+        android:layout_marginBottom="8dp"
         android:scrollbars="vertical"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/pinkHome"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
     </android.support.v7.widget.RecyclerView>
 
     <ImageButton
         android:id="@+id/pinkHome"
-        android:layout_width="0dp"
-        android:layout_height="63dp"
+        android:layout_width="60dp"
+        android:layout_height="51dp"
 
-        android:layout_marginBottom="1dp"
-        android:layout_marginEnd="252dp"
+        android:layout_marginTop="8dp"
         android:background="@color/white"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/delete_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_recycler_view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.997"
         app:srcCompat="@drawable/pinkhome" />
 
 </android.support.constraint.ConstraintLayout>

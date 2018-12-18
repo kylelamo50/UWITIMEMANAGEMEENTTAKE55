@@ -96,18 +96,21 @@
         android:id="@+id/task_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Save"
-        app:layout_constraintBaseline_toBaselineOf="@+id/all"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.381"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.982" />
 
     <Button
         android:id="@+id/Dstart"
-        android:layout_width="33dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="17dp"
+        android:layout_marginEnd="8dp"
         android:text="+"
         app:layout_constraintBaseline_toBaselineOf="@+id/task_startDate"
         app:layout_constraintEnd_toStartOf="@+id/task_startDate"
@@ -115,10 +118,10 @@
 
     <Button
         android:id="@+id/Tstart"
-        android:layout_width="35dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="17dp"
+        android:layout_marginEnd="8dp"
         android:text="+"
         app:layout_constraintBaseline_toBaselineOf="@+id/task_startTime"
         app:layout_constraintEnd_toStartOf="@+id/task_startTime"
@@ -126,8 +129,8 @@
 
     <Button
         android:id="@+id/Dend"
-        android:layout_width="36dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="22dp"
         android:text="+"
         app:layout_constraintBaseline_toBaselineOf="@+id/task_endDate"
@@ -136,31 +139,25 @@
 
     <Button
         android:id="@+id/Tend"
-        android:layout_width="32dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="16dp"
         android:text="+"
         app:layout_constraintBaseline_toBaselineOf="@+id/task_endTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/task_endTime" />
 
-    <Button
-        android:id="@+id/all"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="37dp"
-        android:text="Show All"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/task_save" />
-
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="69dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="218dp"
-        android:text="Add Note"
+        android:text="Add Note :"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/task_endTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/general_title" />
 
 </android.support.constraint.ConstraintLayout>
