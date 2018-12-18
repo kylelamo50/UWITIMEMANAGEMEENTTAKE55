@@ -11,8 +11,10 @@
         android:id="@+id/general_title"
         android:layout_width="110dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
+
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+
         android:ems="10"
         android:inputType="textPersonName"
         android:text="School"
@@ -25,41 +27,51 @@
 
     <EditText
         android:id="@+id/task_startDate"
-        android:layout_width="66dp"
-        android:layout_height="32dp"
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="23dp"
         android:ems="10"
         android:inputType="date"
         android:text="Start Date"
-        tools:layout_editor_absoluteX="117dp"
-        tools:layout_editor_absoluteY="64dp"
+        app:layout_constraintBottom_toTopOf="@+id/task_startTime"
+        app:layout_constraintEnd_toStartOf="@+id/task_endDate"
+        app:layout_constraintStart_toEndOf="@+id/Dstart"
+        app:layout_constraintTop_toBottomOf="@+id/general_title"
+
         tools:text="Start Date" />
 
     <EditText
         android:id="@+id/task_endDate"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="23dp"
+
+        android:layout_height="50dp"
+        android:layout_marginTop="19dp"
         android:layout_marginEnd="9dp"
-        android:layout_marginTop="79dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:inputType="date"
         android:text="End Date"
-        app:layout_constraintBottom_toTopOf="@+id/task_endTime"
+        app:layout_constraintBottom_toTopOf="@+id/task_startTime"
         app:layout_constraintEnd_toStartOf="@+id/Dend"
         app:layout_constraintStart_toEndOf="@+id/task_startDate"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/general_title"
+
         tools:text="End Date" />
 
     <EditText
         android:id="@+id/task_startTime"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="47dp"
+
         android:layout_marginEnd="27dp"
+        android:layout_marginBottom="39dp"
         android:ems="10"
         android:inputType="time"
         android:text="Start Time"
-        app:layout_constraintBottom_toTopOf="@+id/locationTV"
+        app:layout_constraintBottom_toTopOf="@+id/locationEditText"
+
         app:layout_constraintEnd_toStartOf="@+id/task_endTime"
         app:layout_constraintStart_toEndOf="@+id/Tstart"
         app:layout_constraintTop_toBottomOf="@+id/task_startDate" />
@@ -67,41 +79,48 @@
     <EditText
         android:id="@+id/task_endTime"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="327dp"
-        android:layout_marginEnd="9dp"
+
+        android:layout_height="53dp"
+        android:layout_marginTop="78dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="79dp"
         android:ems="10"
         android:inputType="time"
         android:text="End Time"
-        app:layout_constraintBottom_toTopOf="@+id/all"
+        app:layout_constraintBottom_toBottomOf="@+id/locationEditText"
         app:layout_constraintEnd_toStartOf="@+id/Tend"
         app:layout_constraintStart_toEndOf="@+id/task_startTime"
-        app:layout_constraintTop_toBottomOf="@+id/task_endDate" />
+        app:layout_constraintTop_toBottomOf="@+id/general_title" />
+
 
     <EditText
         android:id="@+id/task_note"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="141dp"
-        android:layout_marginEnd="32dp"
+
         android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="33dp"
         android:ems="10"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/task_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Tstart" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <Button
         android:id="@+id/task_save"
-        android:layout_width="0dp"
+        android:layout_width="128dp"
+
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="36dp"
         android:layout_marginStart="85dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/all"
+
+        app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/task_note" />
 
@@ -109,10 +128,12 @@
         android:id="@+id/Dstart"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="23dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="79dp"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="89dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="13dp"
+
         android:text="+"
         app:layout_constraintBottom_toTopOf="@+id/Tstart"
         app:layout_constraintEnd_toStartOf="@+id/task_startDate"
@@ -123,11 +144,13 @@
         android:id="@+id/Tstart"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="205dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginStart="45dp"
+
+        android:layout_marginStart="44dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="66dp"
         android:text="+"
-        app:layout_constraintBottom_toTopOf="@+id/task_note"
+        app:layout_constraintBottom_toTopOf="@+id/locationTV"
+
         app:layout_constraintEnd_toStartOf="@+id/task_startTime"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Dstart" />
@@ -136,9 +159,11 @@
         android:id="@+id/Dend"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="23dp"
-        android:layout_marginEnd="32dp"
+
         android:layout_marginTop="79dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="23dp"
+
         android:text="+"
         app:layout_constraintBottom_toTopOf="@+id/Tend"
         app:layout_constraintEnd_toEndOf="parent"
@@ -149,73 +174,72 @@
         android:id="@+id/Tend"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="385dp"
+
         android:layout_marginEnd="33dp"
+        android:layout_marginBottom="329dp"
         android:text="+"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/task_endTime"
         app:layout_constraintTop_toBottomOf="@+id/Dend" />
 
-    <Button
-        android:id="@+id/all"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="90dp"
-        android:text="Show All"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/task_save"
-        app:layout_constraintTop_toBottomOf="@+id/task_endTime" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="13dp"
+
+        android:layout_marginBottom="12dp"
+
         android:text="Add Note"
         app:layout_constraintBottom_toTopOf="@+id/task_note"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/classTV" />
+
+        app:layout_constraintTop_toBottomOf="@+id/classEditText" />
 
     <TextView
         android:id="@+id/locationTV"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+
+        android:layout_marginEnd="14dp"
         android:layout_marginBottom="47dp"
-        android:layout_marginEnd="15dp"
+
         android:text=" Location: "
         app:layout_constraintBottom_toTopOf="@+id/classTV"
         app:layout_constraintEnd_toStartOf="@+id/locationEditText"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/task_startTime" />
+
+        app:layout_constraintTop_toBottomOf="@+id/Tstart" />
+
 
     <EditText
         android:id="@+id/locationEditText"
         android:layout_width="wrap_content"
-        android:layout_height="41dp"
-        android:layout_marginBottom="38dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="35dp"
+
+        android:layout_height="0dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="26dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/classTV"
+        app:layout_constraintBottom_toTopOf="@+id/classEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/locationTV"
-        app:layout_constraintTop_toBottomOf="@+id/Tend" />
+        app:layout_constraintTop_toBottomOf="@+id/task_startTime" />
 
     <TextView
         android:id="@+id/classTV"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="33dp"
-        android:layout_marginEnd="12dp"
+
         android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="185dp"
         android:text="Class: "
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toStartOf="@+id/classEditText"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
@@ -224,9 +248,10 @@
     <EditText
         android:id="@+id/classEditText"
         android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginTop="29dp"
+
+        android:layout_height="0dp"
+        android:layout_marginBottom="22dp"
+
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/textView6"
