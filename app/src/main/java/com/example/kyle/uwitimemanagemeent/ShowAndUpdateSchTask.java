@@ -85,8 +85,8 @@ public class ShowAndUpdateSchTask extends AppCompatActivity implements View.OnCl
         endDate.setText(getDate(rGeneral.getLong(rGeneral.getColumnIndex("ENDDATE"))));
         startTime.setText(getTime(rGeneral.getLong(rGeneral.getColumnIndex("STARTTIME"))));
         endTime.setText(getTime(rGeneral.getLong(rGeneral.getColumnIndex("ENDTIME"))));
-        loc.setText(getTime(rGeneral.getLong(rGeneral.getColumnIndex("LOCATION"))));
-        classes.setText(getTime(rGeneral.getLong(rGeneral.getColumnIndex("CLASS"))));
+        loc.setText(rGeneral.getString(rGeneral.getColumnIndex("LOCATION")));
+        classes.setText(rGeneral.getString(rGeneral.getColumnIndex("CLASS")));
         note.setText(rGeneral.getString(rGeneral.getColumnIndex("NOTE")));
         //end
 

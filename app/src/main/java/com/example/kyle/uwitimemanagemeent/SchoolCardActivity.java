@@ -139,6 +139,7 @@ public class SchoolCardActivity extends AppCompatActivity {
                         .setAction("Action", null)
                         .setDuration(250)
                         .show();
+
             }
         });
 
