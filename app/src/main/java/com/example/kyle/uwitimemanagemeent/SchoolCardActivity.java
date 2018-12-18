@@ -91,9 +91,9 @@ public class SchoolCardActivity extends AppCompatActivity {
                 SchoolCard c;
                 if(cards.size()>0) {
                     c = cards.get(posID);
-                    //  Toast.makeText(getApplicationContext(), "ccc" + cards.size() + "ggg " + posID, Toast.LENGTH_LONG).show();
+
                     boolean a = myDb.deleteItemSchool(c.getId());
-                    //  Toast.makeText(getApplicationContext(), "ccc" + a, Toast.LENGTH_LONG).show();
+
 
                     cards.remove(posID);
 

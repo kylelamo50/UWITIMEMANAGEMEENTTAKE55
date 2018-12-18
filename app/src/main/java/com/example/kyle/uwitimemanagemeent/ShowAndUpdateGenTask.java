@@ -59,10 +59,10 @@ public class ShowAndUpdateGenTask extends AppCompatActivity implements View.OnCl
         SaveandUpdate = (Button) findViewById(R.id.task_save);
         myDb=new DatabaseHelper(getApplicationContext());
         String posID=getIntent().getStringExtra("E");
-        id=Integer.parseInt(posID);
+        id=Integer.parseInt(posID);                                            ////id of the general item you want to update
 
 
-        Cursor rGeneral=myDb.getGeneralDataBasedOnId(id);
+        Cursor rGeneral=myDb.getGeneralDataBasedOnId(id);                     //find the general task in the database using the id
         rGeneral.moveToFirst();
 
         sDate=rGeneral.getLong(rGeneral.getColumnIndex("STARTDATE"));
@@ -87,6 +87,7 @@ public class ShowAndUpdateGenTask extends AppCompatActivity implements View.OnCl
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //validation check to ensure the data is entered
                         if (startDate.getText().toString().trim().contains("Start Date") || endDate.getText().toString().contains("End Date") || startTime.getText().toString().contains("Start Time") || endTime.getText().toString().contains("End Time")) {
                             Toast.makeText(getApplicationContext(), "Data not Inserted.Please fill out Date and Time information", Toast.LENGTH_LONG).show();
                         }
@@ -101,7 +102,7 @@ public class ShowAndUpdateGenTask extends AppCompatActivity implements View.OnCl
                                 n = note.getText().toString();
                             }
 
-                            myDb.updateDataGeneral(id,s, sDate, eDate, sTime, eTime, n);
+                            myDb.updateDataGeneral(id,s, sDate, eDate, sTime, eTime, n);           //update general table in the database
 
 
 
@@ -130,7 +131,7 @@ public class ShowAndUpdateGenTask extends AppCompatActivity implements View.OnCl
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
+            // Launch Date Picker Dialog
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
 
@@ -166,7 +167,7 @@ public class ShowAndUpdateGenTask extends AppCompatActivity implements View.OnCl
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
+            // Launch Date Picker Dialog
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     new DatePickerDialog.OnDateSetListener() {
 
