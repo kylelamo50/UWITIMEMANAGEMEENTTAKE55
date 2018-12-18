@@ -21,10 +21,14 @@
 
     <Button
         android:id="@+id/school_btn"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="296dp"
+        android:background="@color/colorPrimary"
         android:text="School"
-        app:layout_constraintBottom_toTopOf="@+id/gym_btn"
+        android:textColorLink="@color/design_default_color_primary_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -33,6 +37,7 @@
         android:id="@+id/gym_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
         android:text="Gym"
         app:layout_constraintBottom_toTopOf="@+id/party_btn"
         app:layout_constraintStart_toStartOf="@+id/school_btn"
@@ -42,6 +47,7 @@
         android:id="@+id/party_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/darkgreen"
         android:text="Party"
         app:layout_constraintBottom_toTopOf="@+id/general_btn"
         app:layout_constraintStart_toStartOf="@+id/gym_btn"
@@ -52,7 +58,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="152dp"
+        android:background="@color/colorPrimaryDark"
         android:text="General"
+        android:textColorLink="@color/common_google_signin_btn_text_dark_disabled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/party_btn"
         app:layout_constraintTop_toBottomOf="@+id/party_btn" />
