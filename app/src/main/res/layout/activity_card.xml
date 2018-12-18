@@ -28,7 +28,7 @@
     <Button
         android:id="@+id/open_button"
         android:layout_width="246dp"
-        android:layout_height="52dp"
+        android:layout_height="54dp"
         android:background="@color/darkgreen"
         android:text="Open"
         android:textColor="@android:color/background_light"
