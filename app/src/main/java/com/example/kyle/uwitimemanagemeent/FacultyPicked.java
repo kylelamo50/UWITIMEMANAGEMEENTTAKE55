@@ -12,6 +12,7 @@ public class FacultyPicked {
 
     public FacultyPicked(Context context) {
         this.c = context;
+
     }
 
     public int getIcon() {                                //returns id of the faculty icon of the faculty selected by the user
@@ -51,6 +52,22 @@ public class FacultyPicked {
             i=R.drawable.la;
         }
         return i;
+    }
+
+    public String getFcultyPicked(){
+        String b = "";
+        try {
+            FileInputStream i1 = c.openFileInput("faculty.txt");            //open the faculty file
+            int size1 = i1.available();
+            byte[] buffer1 = new byte[size1];
+            i1.read(buffer1);
+            i1.close();
+            b = new String(buffer1);           //b set to the text in the file
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return b;
     }
 }
 

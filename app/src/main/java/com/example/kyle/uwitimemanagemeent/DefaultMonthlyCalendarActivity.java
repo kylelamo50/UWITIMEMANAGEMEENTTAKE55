@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Intent;
 import android.widget.Toast;
@@ -38,6 +41,8 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
     private DrawerLayout drawer;
     private ArrayList<String> text;
     Dialog myDialog,myDialog2;
+    ImageView imageViewNav;
+    TextView textViewNav;
     ImageButton add;
     String s = "";
     Intent i;
@@ -74,6 +79,8 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
         compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
         compactCalendar.setUseThreeLetterAbbreviation(true);
         add = (ImageButton) findViewById(R.id.add_task_button);
+        imageViewNav = findViewById(R.id.imageViewNav);
+        textViewNav = findViewById(R.id.textViewNav);
 
         myDb = new DatabaseHelper(getApplicationContext());
 
@@ -222,6 +229,15 @@ public class DefaultMonthlyCalendarActivity extends AppCompatActivity  implement
                     startActivity(i);
 
                 } }});
+
+        FacultyPicked f = new FacultyPicked(this);
+
+        int x = R.drawable.applogo;
+        x = f.getIcon();
+
+        imageViewNav.setImageResource(x);
+
+        textViewNav.setText(f.getFcultyPicked());
     }
 
 
